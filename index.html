@@ -72,35 +72,38 @@
     .nav-cta:hover { background: var(--accent2) !important; color: #fff !important; }
 
     /* ── HERO ── */
-    .hero {
-      min-height: 100vh; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; text-align: center;
-      padding: 7rem 2rem 4rem;
-      background: radial-gradient(ellipse 90% 60% at 50% -10%, rgba(79,70,229,0.1), transparent 70%);
+    .hero-wrap {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 7rem 2.5rem 4rem;
+      max-width: 1240px; margin: 0 auto;
+      gap: 4rem;
     }
+    .hero-left {}
     .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 0.5rem;
       background: rgba(79,70,229,0.08); border: 1px solid rgba(79,70,229,0.2);
-      color: var(--accent); font-size: 0.7rem; font-weight: 700;
-      padding: 0.3rem 0.9rem; border-radius: 100px;
-      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2.25rem;
+      color: var(--accent); font-size: 0.68rem; font-weight: 700;
+      padding: 0.28rem 0.8rem; border-radius: 100px;
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2rem;
     }
+    .hero-eyebrow span { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); display: inline-block; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
     .hero h1 {
-      font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 900;
-      letter-spacing: -0.05em; line-height: 1.0; margin-bottom: 1.75rem; max-width: 900px;
+      font-size: clamp(2.6rem, 5vw, 4.5rem); font-weight: 900;
+      letter-spacing: -0.05em; line-height: 1.0; margin-bottom: 1.5rem;
     }
-    .hero h1 .line2 { color: var(--accent); display: block; }
+    .hero h1 .accent { color: var(--accent); }
+    .hero h1 .muted-word { color: var(--muted2); }
     .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.2rem); color: var(--muted);
-      max-width: 580px; margin: 0 auto 0.75rem; line-height: 1.75;
+      font-size: 1.05rem; color: var(--muted); max-width: 480px;
+      line-height: 1.75; margin-bottom: 2rem;
     }
-    .hero-contrast {
-      font-size: 0.9rem; color: var(--muted2); margin-bottom: 2.5rem;
-      font-style: italic;
-    }
-    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 3rem; }
+    .hero-sub strong { color: var(--text); font-weight: 600; }
+    .hero-cta { display: flex; gap: 0.85rem; flex-wrap: wrap; margin-bottom: 2.75rem; }
     .btn {
-      padding: 0.75rem 1.75rem; border-radius: 8px; font-size: 0.9rem;
+      padding: 0.75rem 1.6rem; border-radius: 8px; font-size: 0.88rem;
       font-weight: 600; cursor: pointer; transition: all 0.2s;
       display: inline-flex; align-items: center; gap: 0.4rem;
     }
@@ -108,15 +111,81 @@
     .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(79,70,229,0.3); }
     .btn-outline { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
     .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-
     .trust-bar {
-      display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; justify-content: center;
-      padding-top: 2.5rem; border-top: 1px solid var(--border); width: 100%; max-width: 700px;
+      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+      padding-top: 2rem; border-top: 1px solid var(--border);
     }
-    .trust-stat { text-align: center; }
-    .trust-num { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.04em; color: var(--text); }
-    .trust-label { font-size: 0.73rem; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.06em; }
-    .trust-sep { width: 1px; height: 32px; background: var(--border); }
+    .trust-stat {}
+    .trust-num { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.04em; color: var(--text); }
+    .trust-label { font-size: 0.68rem; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.06em; }
+    .trust-sep { width: 1px; height: 28px; background: var(--border); }
+
+    /* ── TERMINAL CARD ── */
+    .hero-right { position: relative; }
+    .terminal-card {
+      background: #0c1120;
+      border: 1px solid rgba(99,102,241,0.25);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(79,70,229,0.18), 0 0 0 1px rgba(99,102,241,0.1);
+    }
+    .terminal-titlebar {
+      background: #131929; border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 0.85rem 1.25rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .terminal-dots { display: flex; gap: 0.45rem; }
+    .terminal-dots span {
+      width: 11px; height: 11px; border-radius: 50%;
+    }
+    .td-red   { background: #ff5f57; }
+    .td-yellow{ background: #febc2e; }
+    .td-green { background: #28c840; }
+    .terminal-title {
+      font-size: 0.75rem; color: #475569; font-family: monospace;
+      margin-left: 0.5rem; letter-spacing: 0.02em;
+    }
+    .terminal-body { padding: 1.5rem; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.8rem; line-height: 1.7; }
+    .t-prompt { color: #6366f1; }
+    .t-cmd { color: #e2e8f0; }
+    .t-muted { color: #334155; }
+    .t-section { color: #64748b; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; margin: 1rem 0 0.5rem; }
+    .t-ok   { color: #34d399; }
+    .t-warn { color: #f59e0b; }
+    .t-err  { color: #f87171; }
+    .t-info { color: #94a3b8; }
+    .t-key  { color: #a5b4fc; }
+    .t-val  { color: #e2e8f0; }
+    .t-score-bar {
+      display: flex; align-items: center; gap: 0.75rem; margin: 0.75rem 0;
+    }
+    .t-bar-track {
+      flex: 1; height: 4px; background: rgba(255,255,255,0.07); border-radius: 2px; overflow: hidden;
+    }
+    .t-bar-fill {
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, #6366f1, #34d399);
+      width: 72%;
+    }
+    .t-score-label { font-size: 0.72rem; color: #34d399; font-weight: 700; }
+    .t-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 0.85rem 0; }
+    .t-action { display: flex; gap: 0.75rem; margin-top: 0.75rem; }
+    .t-btn {
+      font-size: 0.72rem; padding: 0.3rem 0.75rem; border-radius: 5px; font-family: monospace;
+      cursor: default;
+    }
+    .t-btn-primary { background: rgba(99,102,241,0.2); border: 1px solid rgba(99,102,241,0.35); color: #a5b4fc; }
+    .t-btn-ghost   { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: #475569; }
+    .t-cursor { display: inline-block; width: 7px; height: 14px; background: #6366f1; vertical-align: middle; animation: blink 1.1s step-end infinite; margin-left: 2px; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .hero-badge-row {
+      display: flex; gap: 0.6rem; margin-top: 1rem; flex-wrap: wrap;
+    }
+    .hero-badge {
+      font-size: 0.7rem; padding: 0.25rem 0.7rem; border-radius: 100px;
+      border: 1px solid var(--border); color: var(--muted); background: var(--surface);
+    }
 
     /* ── MANIFESTO STRIP ── */
     .manifesto {
@@ -276,6 +345,14 @@
     .footer-links a:hover { color: var(--accent); }
     .footer-copy { font-size: 0.78rem; color: var(--muted2); }
 
+    @media (max-width: 1024px) {
+      .hero-wrap { grid-template-columns: 1fr; gap: 3rem; padding-top: 6rem; text-align: center; }
+      .hero-left { display: flex; flex-direction: column; align-items: center; }
+      .hero-sub { max-width: 560px; }
+      .hero-cta { justify-content: center; }
+      .trust-bar { justify-content: center; }
+      .hero-badge-row { justify-content: center; }
+    }
     @media (max-width: 900px) {
       .os-grid { grid-template-columns: repeat(3, 1fr); }
       .os-card:not(:last-child) { border-right: 1px solid var(--border); }
@@ -288,6 +365,7 @@
       .for-inner { grid-template-columns: 1fr; gap: 2rem; }
       .trust-sep { display: none; }
       footer { flex-direction: column; text-align: center; }
+      .terminal-body { font-size: 0.72rem; }
     }
   </style>
 </head>
@@ -342,39 +420,101 @@
 </nav>
 
 <!-- ── HERO ── -->
-<div class="hero">
-  <div class="hero-eyebrow">&#9889; Open Source &middot; Practitioner-Built &middot; Senior-Only</div>
-  <h1>Most advice stops<br/><span class="line2">at year two.</span></h1>
-  <p class="hero-sub">
-    TechTradeoff is built for the professionals in year twelve &mdash; when the tradeoffs are company-level, the stakes are real, and &ldquo;just Google it&rdquo; stopped working.
-  </p>
-  <p class="hero-contrast">Tools, frameworks, and playbooks. Not tutorials. Not theory. Not another certification.</p>
-  <div class="hero-cta">
-    <a href="#pain" class="btn btn-primary">See What We Solve &#8594;</a>
-    <a href="https://techtradeoff.substack.com" target="_blank" class="btn btn-outline">Read the Newsletter</a>
+<div style="background: radial-gradient(ellipse 70% 60% at 70% 40%, rgba(79,70,229,0.07), transparent 65%), radial-gradient(ellipse 50% 80% at 0% 50%, rgba(124,58,237,0.04), transparent 60%);">
+<div class="hero-wrap">
+
+  <!-- Left: Editorial headline -->
+  <div class="hero-left">
+    <div class="hero-eyebrow"><span></span> &nbsp;For Senior Tech Professionals</div>
+    <h1>
+      Most advice<br/>
+      stops at<br/>
+      <span class="accent">year two.</span>
+    </h1>
+    <p class="hero-sub">
+      TechTradeoff is built for professionals in <strong>year twelve</strong> &mdash;
+      when the tradeoffs are company-level, the decisions are irreversible,
+      and &ldquo;just Google it&rdquo; stopped working years ago.
+    </p>
+    <div class="hero-cta">
+      <a href="#pain" class="btn btn-primary">See What We Solve &#8594;</a>
+      <a href="https://techtradeoff.substack.com" target="_blank" class="btn btn-outline">Read the Newsletter</a>
+    </div>
+    <div class="trust-bar">
+      <div class="trust-stat">
+        <div class="trust-num">6</div>
+        <div class="trust-label">Open Source Tools</div>
+      </div>
+      <div class="trust-sep"></div>
+      <div class="trust-stat">
+        <div class="trust-num">100K+</div>
+        <div class="trust-label">Asset Scale</div>
+      </div>
+      <div class="trust-sep"></div>
+      <div class="trust-stat">
+        <div class="trust-num">4</div>
+        <div class="trust-label">Domains</div>
+      </div>
+      <div class="trust-sep"></div>
+      <div class="trust-stat">
+        <div class="trust-num">15+</div>
+        <div class="trust-label">Yrs Practitioner</div>
+      </div>
+    </div>
   </div>
-  <div class="trust-bar">
-    <div class="trust-stat">
-      <div class="trust-num">6</div>
-      <div class="trust-label">Open Source Tools</div>
+
+  <!-- Right: Terminal card -->
+  <div class="hero-right">
+    <div class="terminal-card">
+      <div class="terminal-titlebar">
+        <div class="terminal-dots">
+          <span class="td-red"></span>
+          <span class="td-yellow"></span>
+          <span class="td-green"></span>
+        </div>
+        <span class="terminal-title">archpilot &mdash; architecture review</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="t-prompt">$</span> <span class="t-cmd">archpilot review</span> <span class="t-key">--file</span> <span class="t-val">service-mesh.md</span> <span class="t-key">--context</span> <span class="t-val">"multi-tenant SaaS"</span></div>
+        <div class="t-muted">&nbsp;</div>
+        <div class="t-section">&#9632; Checking against 52 enterprise standards&hellip;</div>
+        <div>&nbsp;</div>
+        <div><span class="t-ok">&#10003;</span> <span class="t-info">Bounded context separation</span> &nbsp;<span class="t-muted">passed</span></div>
+        <div><span class="t-ok">&#10003;</span> <span class="t-info">Event-driven pattern compliance</span> &nbsp;<span class="t-muted">passed</span></div>
+        <div><span class="t-warn">&#9651;</span> <span class="t-info">Tenant isolation model</span> &nbsp;<span class="t-muted">review recommended</span></div>
+        <div><span class="t-err">&#10005;</span> <span class="t-info">Sync call across domain boundary</span> &nbsp;<span class="t-muted">line 47</span></div>
+        <div><span class="t-err">&#10005;</span> <span class="t-info">Missing data residency constraints</span></div>
+        <hr class="t-divider"/>
+        <div class="t-section">&#9632; Constraint analysis</div>
+        <div><span class="t-key">tenant_count</span> <span class="t-muted">500</span> &nbsp;<span class="t-warn">&#9679;</span> <span class="t-info">Cluster-per-tenant costs $2.4M/yr</span></div>
+        <div><span class="t-key">data_residency</span> <span class="t-muted">EU/US split required</span> &nbsp;<span class="t-err">&#9679;</span> <span class="t-info">Not addressed</span></div>
+        <div><span class="t-key">burst_model</span> &nbsp;<span class="t-muted">unmodelled</span> &nbsp;<span class="t-warn">&#9679;</span> <span class="t-info">Add HPA config</span></div>
+        <hr class="t-divider"/>
+        <div class="t-section">&#9632; Architecture score</div>
+        <div class="t-score-bar">
+          <div class="t-bar-track"><div class="t-bar-fill"></div></div>
+          <span class="t-score-label">72 / 100</span>
+        </div>
+        <div><span class="t-warn">&#9651;</span> <span class="t-info">2 violations require architect review before merge</span></div>
+        <div class="t-action">
+          <span class="t-btn t-btn-primary">&#8594; Generate ADR</span>
+          <span class="t-btn t-btn-ghost">View patterns</span>
+          <span class="t-btn t-btn-ghost">Fix interactive</span>
+        </div>
+        <div style="margin-top:0.85rem;"><span class="t-muted">&#9472;&#9472;&#9472;</span> <span class="t-muted">Ready</span><span class="t-cursor"></span></div>
+      </div>
     </div>
-    <div class="trust-sep"></div>
-    <div class="trust-stat">
-      <div class="trust-num">100K+</div>
-      <div class="trust-label">Asset Scale</div>
-    </div>
-    <div class="trust-sep"></div>
-    <div class="trust-stat">
-      <div class="trust-num">4</div>
-      <div class="trust-label">Service Domains</div>
-    </div>
-    <div class="trust-sep"></div>
-    <div class="trust-stat">
-      <div class="trust-num">15+</div>
-      <div class="trust-label">Years Practitioner</div>
+    <div class="hero-badge-row">
+      <span class="hero-badge">&#128279; archpilot</span>
+      <span class="hero-badge">&#128279; archpilot-cli</span>
+      <span class="hero-badge">&#128279; archpilot-reviewer</span>
+      <span class="hero-badge">&#128279; cadex</span>
+      <span class="hero-badge">+ 2 more</span>
     </div>
   </div>
-</div>
+
+</div><!-- end hero-wrap -->
+</div><!-- end bg wrapper -->
 
 <!-- ── MANIFESTO ── -->
 <div class="manifesto">
