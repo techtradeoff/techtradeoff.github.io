@@ -72,53 +72,62 @@
     .nav-cta:hover { background: var(--accent2) !important; color: #fff !important; }
 
     /* ── HERO ── */
-    .hero-wrap {
+    .hero {
       min-height: 100vh;
-      display: grid; grid-template-columns: 1fr 1fr;
-      align-items: center;
-      padding: 7rem 2.5rem 4rem;
-      max-width: 1240px; margin: 0 auto;
-      gap: 4rem;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 5rem;
+      background:
+        radial-gradient(ellipse 80% 55% at 50% 0%, rgba(79,70,229,0.09), transparent 65%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(124,58,237,0.04), transparent 60%);
     }
-    .hero-left {}
     .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(79,70,229,0.08); border: 1px solid rgba(79,70,229,0.2);
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: rgba(79,70,229,0.07); border: 1px solid rgba(79,70,229,0.18);
       color: var(--accent); font-size: 0.68rem; font-weight: 700;
-      padding: 0.28rem 0.8rem; border-radius: 100px;
-      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2rem;
+      padding: 0.3rem 0.9rem; border-radius: 100px;
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2.25rem;
     }
-    .hero-eyebrow span { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); display: inline-block; animation: pulse 2s ease-in-out infinite; }
+    .hero-eyebrow span { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); display: inline-block; animation: pulse 2s ease-in-out infinite; flex-shrink: 0; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
     .hero h1 {
-      font-size: clamp(2.6rem, 5vw, 4.5rem); font-weight: 900;
-      letter-spacing: -0.05em; line-height: 1.0; margin-bottom: 1.5rem;
+      font-size: clamp(3rem, 7.5vw, 6rem); font-weight: 900;
+      letter-spacing: -0.055em; line-height: 0.97; margin-bottom: 1.75rem;
+      max-width: 820px;
     }
     .hero h1 .accent { color: var(--accent); }
-    .hero h1 .muted-word { color: var(--muted2); }
+    .hero h1 .dim { color: var(--muted2); }
     .hero-sub {
-      font-size: 1.05rem; color: var(--muted); max-width: 480px;
-      line-height: 1.75; margin-bottom: 2rem;
+      font-size: clamp(1rem, 1.8vw, 1.15rem); color: var(--muted);
+      max-width: 600px; line-height: 1.8; margin-bottom: 0.85rem;
     }
     .hero-sub strong { color: var(--text); font-weight: 600; }
-    .hero-cta { display: flex; gap: 0.85rem; flex-wrap: wrap; margin-bottom: 2.75rem; }
+    .hero-pills {
+      display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+    .hero-pill {
+      font-size: 0.72rem; color: var(--muted); padding: 0.3rem 0.8rem;
+      border: 1px solid var(--border); border-radius: 100px; background: var(--surface);
+    }
+    .hero-cta { display: flex; gap: 0.9rem; flex-wrap: wrap; justify-content: center; margin-bottom: 3.5rem; }
     .btn {
-      padding: 0.75rem 1.6rem; border-radius: 8px; font-size: 0.88rem;
+      padding: 0.8rem 1.75rem; border-radius: 8px; font-size: 0.9rem;
       font-weight: 600; cursor: pointer; transition: all 0.2s;
       display: inline-flex; align-items: center; gap: 0.4rem;
     }
     .btn-primary { background: var(--accent); color: #fff; border: none; }
-    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(79,70,229,0.3); }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(79,70,229,0.32); }
     .btn-outline { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
     .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
     .trust-bar {
-      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
-      padding-top: 2rem; border-top: 1px solid var(--border);
+      display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap; justify-content: center;
+      padding-top: 2.5rem; border-top: 1px solid var(--border); width: 100%; max-width: 640px;
     }
-    .trust-stat {}
-    .trust-num { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.04em; color: var(--text); }
-    .trust-label { font-size: 0.68rem; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.06em; }
-    .trust-sep { width: 1px; height: 28px; background: var(--border); }
+    .trust-stat { text-align: center; }
+    .trust-num { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; color: var(--text); line-height: 1; }
+    .trust-label { font-size: 0.67rem; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 0.2rem; }
+    .trust-sep { width: 1px; height: 30px; background: var(--border); }
 
     /* ── TERMINAL CARD ── */
     .hero-right { position: relative; }
@@ -361,11 +370,6 @@
     .footer-copy { font-size: 0.78rem; color: var(--muted2); }
 
     @media (max-width: 1024px) {
-      .hero-wrap { grid-template-columns: 1fr; gap: 3rem; padding-top: 6rem; text-align: center; }
-      .hero-left { display: flex; flex-direction: column; align-items: center; }
-      .hero-sub { max-width: 560px; }
-      .hero-cta { justify-content: center; }
-      .trust-bar { justify-content: center; }
       .hero-badge-row { justify-content: center; }
     }
     @media (max-width: 900px) {
@@ -435,48 +439,60 @@
 </nav>
 
 <!-- ── HERO ── -->
-<div style="background: radial-gradient(ellipse 70% 60% at 70% 40%, rgba(79,70,229,0.07), transparent 65%), radial-gradient(ellipse 50% 80% at 0% 50%, rgba(124,58,237,0.04), transparent 60%);">
-<div class="hero-wrap">
+<div class="hero">
+  <div class="hero-eyebrow"><span></span>&nbsp; The OS for Senior Tech Professionals</div>
 
-  <!-- Left: Editorial headline -->
-  <div class="hero-left">
-    <div class="hero-eyebrow"><span></span> &nbsp;For Senior Tech Professionals</div>
-    <h1>
-      Most advice<br/>
-      stops at<br/>
-      <span class="accent">year two.</span>
-    </h1>
-    <p class="hero-sub">
-      TechTradeoff is built for professionals in <strong>year twelve</strong> &mdash;
-      when the tradeoffs are company-level, the decisions are irreversible,
-      and &ldquo;just Google it&rdquo; stopped working years ago.
-    </p>
-    <div class="hero-cta">
-      <a href="#pain" class="btn btn-primary">See What We Solve &#8594;</a>
-      <a href="https://techtradeoff.substack.com" target="_blank" class="btn btn-outline">Read the Newsletter</a>
+  <h1>
+    You&rsquo;ve outgrown<br/>
+    <span class="accent">the tutorials.</span>
+  </h1>
+
+  <p class="hero-sub">
+    Most tools cap out at year two. <strong>TechTradeoff is for year twelve</strong> &mdash;
+    when the problems are architectural, the deals are enterprise-scale, the AI is in production,
+    and the decisions are yours to own.
+  </p>
+
+  <div class="hero-pills">
+    <span class="hero-pill">Staff Engineers</span>
+    <span class="hero-pill">Enterprise Architects</span>
+    <span class="hero-pill">CTOs &amp; VPs Eng</span>
+    <span class="hero-pill">Solutions Architects</span>
+    <span class="hero-pill">Senior Consultants</span>
+  </div>
+
+  <div class="hero-cta">
+    <a href="#pain" class="btn btn-primary">See What We Solve &#8594;</a>
+    <a href="https://techtradeoff.substack.com" target="_blank" class="btn btn-outline">Read the Newsletter</a>
+  </div>
+
+  <div class="trust-bar">
+    <div class="trust-stat">
+      <div class="trust-num">6</div>
+      <div class="trust-label">Open Source Tools</div>
     </div>
-    <div class="trust-bar">
-      <div class="trust-stat">
-        <div class="trust-num">6</div>
-        <div class="trust-label">Open Source Tools</div>
-      </div>
-      <div class="trust-sep"></div>
-      <div class="trust-stat">
-        <div class="trust-num">100K+</div>
-        <div class="trust-label">Asset Scale</div>
-      </div>
-      <div class="trust-sep"></div>
-      <div class="trust-stat">
-        <div class="trust-num">4</div>
-        <div class="trust-label">Domains</div>
-      </div>
-      <div class="trust-sep"></div>
-      <div class="trust-stat">
-        <div class="trust-num">15+</div>
-        <div class="trust-label">Yrs Practitioner</div>
-      </div>
+    <div class="trust-sep"></div>
+    <div class="trust-stat">
+      <div class="trust-num">100K+</div>
+      <div class="trust-label">Asset Scale</div>
+    </div>
+    <div class="trust-sep"></div>
+    <div class="trust-stat">
+      <div class="trust-num">4</div>
+      <div class="trust-label">Service Domains</div>
+    </div>
+    <div class="trust-sep"></div>
+    <div class="trust-stat">
+      <div class="trust-num">15+</div>
+      <div class="trust-label">Yrs Practitioner</div>
     </div>
   </div>
+</div>
+
+<!-- ── TERMINAL SHOWCASE (below hero) ── -->
+<div style="background: var(--surface2); padding: 1rem 2rem 3.5rem;">
+<div style="max-width: 900px; margin: 0 auto;">
+  <p style="text-align:center; font-size:0.78rem; color:var(--muted2); text-transform:uppercase; letter-spacing:0.1em; font-weight:700; margin-bottom:1.25rem;">See it in action</p>
 
   <!-- Right: Tabbed terminal card -->
   <div class="hero-right">
@@ -603,10 +619,9 @@
       <span class="hero-badge">presales-playbook</span>
       <span class="hero-badge">iiot-ref-arch</span>
     </div>
-  </div>
-
-</div><!-- end hero-wrap -->
-</div><!-- end bg wrapper -->
+  </div><!-- end hero-right -->
+</div><!-- end terminal showcase inner -->
+</div><!-- end terminal showcase -->
 
 <!-- ── MANIFESTO ── -->
 <div class="manifesto">
