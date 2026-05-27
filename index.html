@@ -3,20 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TechTradeoff - Tech OS for Consulting &amp; Product Engineering</title>
-  <meta name="description" content="The operating system for senior tech professionals. Tools, frameworks, and playbooks for Staff Engineers, Architects, CTOs, and Senior Consultants." />
+  <title>TechTradeoff &mdash; Tech OS for Senior Engineering Professionals</title>
+  <meta name="description" content="Tools, frameworks, and playbooks for Staff Engineers, Enterprise Architects, CTOs, and Senior Consultants navigating hard architectural tradeoffs." />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --bg: #f8f9fc;
       --surface: #ffffff;
+      --surface2: #f1f3f9;
       --border: #e2e6ef;
       --accent: #4f46e5;
       --accent2: #7c3aed;
+      --accent-light: rgba(79,70,229,0.07);
       --text: #0f172a;
       --muted: #64748b;
-      --success: #059669;
+      --muted2: #94a3b8;
     }
 
     body {
@@ -29,252 +31,396 @@
     a { color: var(--accent); text-decoration: none; }
     a:hover { color: var(--accent2); }
 
-    /* NAV */
+    /* ── NAV ── */
     nav {
-      position: fixed; top: 0; width: 100%; z-index: 100;
-      background: rgba(248,249,252,0.9);
-      backdrop-filter: blur(12px);
+      position: fixed; top: 0; width: 100%; z-index: 200;
+      background: rgba(248,249,252,0.92);
+      backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
-      padding: 1rem 2rem;
+      padding: 0 2rem;
       display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
     }
-    .nav-brand { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text); }
+    .nav-brand {
+      font-size: 1.1rem; font-weight: 800; letter-spacing: -0.03em; color: var(--text);
+    }
     .nav-brand span { color: var(--accent); }
-    .nav-links { display: flex; gap: 2rem; }
-    .nav-links a { font-size: 0.875rem; color: var(--muted); transition: color 0.2s; }
-    .nav-links a:hover { color: var(--text); }
 
-    /* HERO */
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
+    .nav-links > a, .nav-links > .nav-dropdown > .nav-dropbtn {
+      font-size: 0.875rem; color: var(--muted); padding: 0.5rem 0.75rem;
+      border-radius: 6px; transition: background 0.15s, color 0.15s;
+      background: none; border: none; cursor: pointer; font-family: inherit;
+      display: flex; align-items: center; gap: 0.3rem;
+    }
+    .nav-links > a:hover, .nav-links > .nav-dropdown > .nav-dropbtn:hover {
+      background: var(--surface2); color: var(--text);
+    }
+
+    .nav-dropdown { position: relative; }
+    .nav-dropbtn svg { transition: transform 0.2s; }
+    .nav-dropdown:hover .nav-dropbtn svg { transform: rotate(180deg); }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute; top: calc(100% + 8px); left: 0;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 0.5rem;
+      min-width: 240px;
+      box-shadow: 0 8px 32px rgba(15,23,42,0.1);
+      z-index: 300;
+    }
+    .nav-dropdown:hover .dropdown-menu { display: block; }
+    .dropdown-item {
+      display: flex; flex-direction: column;
+      padding: 0.65rem 0.85rem; border-radius: 8px;
+      transition: background 0.15s;
+      color: var(--text);
+    }
+    .dropdown-item:hover { background: var(--surface2); color: var(--text); }
+    .dropdown-item-name { font-size: 0.875rem; font-weight: 600; }
+    .dropdown-item-desc { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
+    .dropdown-divider { height: 1px; background: var(--border); margin: 0.4rem 0; }
+
+    .nav-cta {
+      background: var(--accent); color: #fff !important;
+      padding: 0.45rem 1rem; border-radius: 6px; font-size: 0.875rem; font-weight: 600;
+      transition: background 0.15s;
+    }
+    .nav-cta:hover { background: var(--accent2) !important; color: #fff !important; }
+
+    /* ── HERO ── */
     .hero {
       min-height: 100vh;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       text-align: center;
-      padding: 6rem 2rem 4rem;
-      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(79,70,229,0.07), transparent);
+      padding: 7rem 2rem 5rem;
+      background: radial-gradient(ellipse 80% 55% at 50% 0%, rgba(79,70,229,0.09), transparent);
     }
-    .hero-badge {
+    .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(79,70,229,0.08); border: 1px solid rgba(79,70,229,0.25);
-      color: var(--accent); font-size: 0.75rem; font-weight: 600;
-      padding: 0.35rem 0.85rem; border-radius: 100px;
-      text-transform: uppercase; letter-spacing: 0.08em;
+      background: var(--accent-light); border: 1px solid rgba(79,70,229,0.22);
+      color: var(--accent); font-size: 0.72rem; font-weight: 700;
+      padding: 0.3rem 0.85rem; border-radius: 100px;
+      text-transform: uppercase; letter-spacing: 0.1em;
       margin-bottom: 2rem;
     }
     .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 5rem);
-      font-weight: 800; letter-spacing: -0.04em; line-height: 1.05;
-      margin-bottom: 1.5rem;
+      font-size: clamp(2.4rem, 6vw, 4.75rem);
+      font-weight: 800; letter-spacing: -0.045em; line-height: 1.04;
+      margin-bottom: 1.5rem; max-width: 900px;
     }
-    .hero h1 span {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
     .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: var(--muted); max-width: 600px; margin: 0 auto 2.5rem;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted); max-width: 620px; margin: 0 auto 1.75rem; line-height: 1.7;
     }
-    .hero-cta {
-      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    .hero-meta {
+      font-size: 0.82rem; color: var(--muted2); margin-bottom: 2.5rem;
     }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
     .btn {
       padding: 0.75rem 1.75rem; border-radius: 8px;
       font-size: 0.9rem; font-weight: 600; cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem;
     }
-    .btn-primary {
-      background: var(--accent); color: #fff; border: none;
-    }
-    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
-    .btn-outline {
-      background: transparent; color: var(--text);
-      border: 1px solid var(--border);
-    }
+    .btn-primary { background: var(--accent); color: #fff; border: none; }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(79,70,229,0.25); }
+    .btn-outline { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
     .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* SECTIONS */
+    .hero-trust {
+      margin-top: 3.5rem; display: flex; align-items: center; gap: 2rem;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .trust-item { font-size: 0.8rem; color: var(--muted2); display: flex; align-items: center; gap: 0.4rem; }
+    .trust-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: 0.5; }
+
+    /* ── PAIN ── */
+    .pain-section {
+      background: var(--text);
+      color: #f8fafc;
+      padding: 5rem 2rem;
+    }
+    .pain-inner { max-width: 1100px; margin: 0 auto; }
+    .pain-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: #818cf8; margin-bottom: 1rem;
+    }
+    .pain-title {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.75rem; color: #f1f5f9;
+    }
+    .pain-sub { color: #94a3b8; max-width: 560px; margin-bottom: 3rem; font-size: 1rem; }
+
+    .pain-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+    .pain-card {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 1.75rem;
+      transition: border-color 0.2s;
+    }
+    .pain-card:hover { border-color: rgba(129,140,248,0.35); }
+    .pain-card-num {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      color: #818cf8; margin-bottom: 1rem; text-transform: uppercase;
+    }
+    .pain-card h3 { font-size: 1rem; font-weight: 700; color: #f1f5f9; margin-bottom: 0.6rem; }
+    .pain-card p { font-size: 0.85rem; color: #94a3b8; line-height: 1.65; }
+    .pain-card .pain-tool {
+      margin-top: 1.25rem; font-size: 0.75rem; font-weight: 600;
+      color: #818cf8; display: flex; align-items: center; gap: 0.4rem;
+    }
+    .pain-tool-badge {
+      background: rgba(129,140,248,0.12); border: 1px solid rgba(129,140,248,0.2);
+      padding: 0.2rem 0.55rem; border-radius: 4px; font-family: monospace; font-size: 0.72rem;
+    }
+
+    /* ── SECTIONS ── */
     section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
     .section-label {
-      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.1em; color: var(--accent); margin-bottom: 1rem;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--accent); margin-bottom: 1rem;
     }
     .section-title {
       font-size: clamp(1.75rem, 3vw, 2.5rem);
-      font-weight: 700; letter-spacing: -0.03em;
-      margin-bottom: 1rem;
+      font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.75rem;
     }
-    .section-sub { color: var(--muted); max-width: 540px; margin-bottom: 3rem; }
+    .section-sub { color: var(--muted); max-width: 560px; margin-bottom: 3rem; font-size: 1rem; }
 
-    /* OS LAYERS */
+    /* ── OS LAYERS ── */
     .os-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
+      gap: 1rem; margin-bottom: 2rem;
     }
     .os-card {
       background: var(--surface); border: 1px solid var(--border);
       border-radius: 12px; padding: 1.5rem;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .os-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(79,70,229,0.08); }
+    .os-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(79,70,229,0.07); }
     .os-card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
     .os-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .os-card p { font-size: 0.8rem; color: var(--muted); }
+    .os-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
 
-    /* PRODUCTS */
-    .products-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.25rem;
-    }
-    .product-card {
+    .audience-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .audience-chip {
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.75rem;
-      transition: all 0.2s; display: flex; flex-direction: column; gap: 0.75rem;
-    }
-    .product-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(79,70,229,0.08); }
-    .product-tag {
-      display: inline-block; font-size: 0.7rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.08em;
-      background: rgba(79,70,229,0.08); color: var(--accent);
-      padding: 0.25rem 0.6rem; border-radius: 4px;
-    }
-    .product-card h3 { font-size: 1.1rem; font-weight: 700; }
-    .product-card p { font-size: 0.875rem; color: var(--muted); flex: 1; }
-    .product-link {
-      font-size: 0.8rem; font-weight: 600; color: var(--accent);
-      display: flex; align-items: center; gap: 0.35rem;
+      padding: 0.4rem 0.9rem; border-radius: 100px;
+      font-size: 0.82rem; color: var(--text);
     }
 
-    /* SERVICES */
+    /* ── SERVICES ── */
+    .services-bg { background: var(--surface2); }
+    .services-inner { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem; }
     .services-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1.25rem;
     }
     .service-card {
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.75rem;
+      border-radius: 14px; padding: 2rem;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .service-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(79,70,229,0.08); }
-    .service-num {
-      font-size: 0.75rem; font-weight: 700; color: var(--accent);
-      margin-bottom: 1rem;
+    .service-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(79,70,229,0.07); }
+    .service-num { font-size: 0.7rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; letter-spacing: 0.08em; }
+    .service-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .service-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; margin-bottom: 1rem; }
+    .service-bullets { list-style: none; }
+    .service-bullets li {
+      font-size: 0.8rem; color: var(--muted); padding: 0.2rem 0;
+      display: flex; align-items: flex-start; gap: 0.5rem;
     }
-    .service-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .service-card p { font-size: 0.85rem; color: var(--muted); }
+    .service-bullets li::before { content: "&#8594;"; color: var(--accent); flex-shrink: 0; }
 
-    /* AUDIENCE */
-    .audience-row {
-      display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem;
-    }
-    .audience-chip {
-      background: var(--surface); border: 1px solid var(--border);
-      padding: 0.5rem 1rem; border-radius: 100px;
-      font-size: 0.85rem; color: var(--text);
-    }
-
-    /* ABOUT */
-    .about-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 16px; padding: 2.5rem;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
-      align-items: center;
-    }
-    .about-card h2 { font-size: 1.75rem; font-weight: 700; margin-bottom: 1rem; }
-    .about-card p { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
-    .about-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-    .about-link {
-      padding: 0.5rem 1rem; border-radius: 8px;
-      background: rgba(79,70,229,0.07); border: 1px solid rgba(79,70,229,0.2);
-      color: var(--accent); font-size: 0.85rem; font-weight: 600;
-      transition: all 0.2s;
-    }
-    .about-link:hover { background: var(--accent); color: #fff; }
-    .about-stats { display: flex; flex-direction: column; gap: 1.25rem; }
-    .stat { border-left: 2px solid var(--accent); padding-left: 1.25rem; }
-    .stat-num { font-size: 2rem; font-weight: 800; letter-spacing: -0.04em; }
-    .stat-label { font-size: 0.8rem; color: var(--muted); }
-
-    /* CTA */
+    /* ── CTA ── */
+    .cta-wrap { padding: 0 2rem 5rem; }
     .cta-section {
-      text-align: center;
-      background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(79,70,229,0.06), transparent);
+      text-align: center; max-width: 1100px; margin: 0 auto;
+      background: var(--surface);
       border: 1px solid var(--border); border-radius: 20px;
-      padding: 4rem 2rem; margin: 0 2rem 4rem;
-      background-color: var(--surface);
+      padding: 4.5rem 2rem;
+      background: linear-gradient(135deg, rgba(79,70,229,0.04) 0%, rgba(124,58,237,0.04) 100%);
     }
     .cta-section h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; margin-bottom: 1rem; }
-    .cta-section p { color: var(--muted); margin-bottom: 2rem; }
+    .cta-section p { color: var(--muted); margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
 
-    /* FOOTER */
+    /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
       padding: 2rem; text-align: center;
-      color: var(--muted); font-size: 0.8rem;
+      color: var(--muted2); font-size: 0.8rem;
       background: var(--surface);
     }
     footer span { color: var(--accent); }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--accent); }
 
-    @media (max-width: 640px) {
-      .about-card { grid-template-columns: 1fr; }
+    @media (max-width: 768px) {
       .nav-links { display: none; }
+      .pain-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
+  <!-- NAV -->
   <nav>
     <div class="nav-brand">Tech<span>Tradeoff</span></div>
     <div class="nav-links">
       <a href="#os">The OS</a>
-      <a href="#products">Products</a>
+
+      <div class="nav-dropdown">
+        <button class="nav-dropbtn">
+          Products
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="https://github.com/gauravs19/archpilot" target="_blank">
+            <span class="dropdown-item-name">archpilot</span>
+            <span class="dropdown-item-desc">Enterprise Architecture Standards Library</span>
+          </a>
+          <a class="dropdown-item" href="https://github.com/gauravs19/archpilot-cli" target="_blank">
+            <span class="dropdown-item-name">archpilot-cli</span>
+            <span class="dropdown-item-desc">Scaffold architecture docs from your terminal</span>
+          </a>
+          <a class="dropdown-item" href="https://github.com/gauravs19/archpilot-reviewer" target="_blank">
+            <span class="dropdown-item-name">archpilot-reviewer</span>
+            <span class="dropdown-item-desc">Automated governance on every PR</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="https://github.com/gauravs19/cadex" target="_blank">
+            <span class="dropdown-item-name">cadex</span>
+            <span class="dropdown-item-desc">Deal qualification framework for presales</span>
+          </a>
+          <a class="dropdown-item" href="https://github.com/gauravs19/presales-playbook" target="_blank">
+            <span class="dropdown-item-name">presales-playbook</span>
+            <span class="dropdown-item-desc">The missing manual for technical sellers</span>
+          </a>
+          <a class="dropdown-item" href="https://github.com/gauravs19/iiot-reference-architecture" target="_blank">
+            <span class="dropdown-item-name">iiot-reference-architecture</span>
+            <span class="dropdown-item-desc">Production IIoT platform reference architecture</span>
+          </a>
+        </div>
+      </div>
+
       <a href="#services">Services</a>
-      <a href="#about">About</a>
+      <a href="about.html">About</a>
       <a href="https://techtradeoff.substack.com" target="_blank">Newsletter</a>
+      <a href="https://www.linkedin.com/in/gauravs19/" target="_blank" class="nav-cta">Get in Touch</a>
     </div>
   </nav>
 
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-badge">&#9889; AI First &middot; Consulting &middot; Product Engineering</div>
-    <h1>The OS for <span>Senior Tech</span><br/>Professionals</h1>
+    <div class="hero-eyebrow">&#9889; The Tech OS for Senior Professionals</div>
+    <h1>Senior problems.<br/>No <em>junior</em> answers.</h1>
     <p class="hero-sub">
-      Tools, frameworks, and playbooks built for senior tech professionals &mdash; Staff Engineers, Enterprise Architects, CTOs, and Senior Consultants who deal with senior-level problems.
+      Most tools are built for beginners. Most advice is built for teams of 10.
+      TechTradeoff is built for the professionals who've outgrown both &mdash;
+      and still have the hardest decisions to make.
     </p>
+    <p class="hero-meta">For Staff Engineers &middot; Enterprise Architects &middot; CTOs &middot; Solutions Architects &middot; Senior Consultants</p>
     <div class="hero-cta">
-      <a href="#products" class="btn btn-primary">Explore Products</a>
-      <a href="https://techtradeoff.substack.com" target="_blank" class="btn btn-outline">Read Newsletter</a>
+      <a href="#pain" class="btn btn-primary">See the Problems We Solve</a>
+      <a href="https://techtradeoff.substack.com" target="_blank" class="btn btn-outline">Read the Newsletter</a>
+    </div>
+    <div class="hero-trust">
+      <span class="trust-item"><span class="trust-dot"></span>Open source &amp; free</span>
+      <span class="trust-item"><span class="trust-dot"></span>6 production tools</span>
+      <span class="trust-item"><span class="trust-dot"></span>100K+ asset scale</span>
+      <span class="trust-item"><span class="trust-dot"></span>4 service domains</span>
+    </div>
+  </div>
+
+  <!-- PAIN AREAS -->
+  <div class="pain-section" id="pain">
+    <div class="pain-inner">
+      <div class="pain-label">The Real Problems</div>
+      <h2 class="pain-title">Where senior professionals get stuck</h2>
+      <p class="pain-sub">These aren't beginner mistakes. They're the invisible friction points that slow down experienced engineers and architects every day.</p>
+      <div class="pain-grid">
+
+        <div class="pain-card">
+          <div class="pain-card-num">01 &mdash; Architecture</div>
+          <h3>LLMs give junior answers to senior questions</h3>
+          <p>You ask an AI to review your architecture and it tells you to "add caching" or "consider microservices." It has no context of enterprise constraints, regulatory requirements, or the tradeoffs you already ruled out.</p>
+          <div class="pain-tool">&#8594; Solved by <span class="pain-tool-badge">archpilot</span></div>
+        </div>
+
+        <div class="pain-card">
+          <div class="pain-card-num">02 &mdash; Governance</div>
+          <h3>Architecture decisions don't survive the PR</h3>
+          <p>Your standards exist in a wiki nobody reads. Developers merge code that violates architectural constraints because there's no automated check between intent and implementation. Drift is invisible until it's a crisis.</p>
+          <div class="pain-tool">&#8594; Solved by <span class="pain-tool-badge">archpilot-reviewer</span></div>
+        </div>
+
+        <div class="pain-card">
+          <div class="pain-card-num">03 &mdash; Documentation</div>
+          <h3>Architecture docs take days to produce correctly</h3>
+          <p>Writing a proper Architecture Decision Record, a C4 diagram narrative, or a system design document for a review takes days of structured effort. Vibe-written docs fail under scrutiny. There's no fast path to verifiable output.</p>
+          <div class="pain-tool">&#8594; Solved by <span class="pain-tool-badge">archpilot-cli</span></div>
+        </div>
+
+        <div class="pain-card">
+          <div class="pain-card-num">04 &mdash; Presales</div>
+          <h3>Enterprise deals die in the solutioning phase</h3>
+          <p>Technical presales is tribal knowledge. Discovery goes deep in some areas and misses commercial risk entirely. Solutions are built before the deal is properly qualified. Deals stall because architects can't navigate the commercial layer.</p>
+          <div class="pain-tool">&#8594; Solved by <span class="pain-tool-badge">cadex</span> &amp; <span class="pain-tool-badge">presales-playbook</span></div>
+        </div>
+
+        <div class="pain-card">
+          <div class="pain-card-num">05 &mdash; GenAI Production</div>
+          <h3>Prototypes don't survive contact with production</h3>
+          <p>Every team can build an LLM demo. Almost none can answer: how do you run 50 concurrent agents reliably? How do you observe what's happening inside a RAG pipeline? How do you govern model outputs at scale? Strategy is missing.</p>
+          <div class="pain-tool">&#8594; Advisory &rarr; <span class="pain-tool-badge">AI/LLM Services</span></div>
+        </div>
+
+        <div class="pain-card">
+          <div class="pain-card-num">06 &mdash; Platform</div>
+          <h3>Every IIoT platform gets reinvented from scratch</h3>
+          <p>Industrial IoT at 100K+ concurrent assets is a solved problem &mdash; but the patterns aren't written down. Teams rebuild the same telemetry pipelines, edge coordination layers, and distributed storage decisions with no reference point.</p>
+          <div class="pain-tool">&#8594; Solved by <span class="pain-tool-badge">iiot-reference-architecture</span></div>
+        </div>
+
+      </div>
     </div>
   </div>
 
   <!-- OS LAYERS -->
   <section id="os">
     <div class="section-label">The Operating System</div>
-    <h2 class="section-title">Built around how senior professionals actually work</h2>
-    <p class="section-sub">Not tutorials. Not beginner guides. A structured system for people who've been in the room when the hard decisions get made.</p>
+    <h2 class="section-title">A structured system, not a content dump</h2>
+    <p class="section-sub">TechTradeoff is organized like an OS &mdash; each layer serves a purpose, everything connects. Pull what you need from the layer that matches the problem.</p>
     <div class="os-grid">
       <div class="os-card">
         <div class="os-card-icon">&#9881;&#65039;</div>
         <h3>Kernel</h3>
-        <p>Core decision frameworks and first-principles thinking for complex architectural tradeoffs</p>
+        <p>Decision frameworks and first-principles thinking. The mental models behind every hard architectural tradeoff.</p>
       </div>
       <div class="os-card">
         <div class="os-card-icon">&#128421;&#65039;</div>
         <h3>Shell</h3>
-        <p>Leadership, stakeholder navigation, and communication at the senior level</p>
+        <p>Leadership and communication at the senior level. Stakeholder navigation, architecture defense, and influence without authority.</p>
       </div>
       <div class="os-card">
         <div class="os-card-icon">&#128268;</div>
         <h3>Drivers</h3>
-        <p>Domain modules &mdash; Architecture, AI/LLM, Platform Engineering, Presales</p>
+        <p>Domain modules across Architecture, AI/LLM, Platform Engineering, and Presales &mdash; deep dives per vertical.</p>
       </div>
       <div class="os-card">
         <div class="os-card-icon">&#128230;</div>
         <h3>Apps</h3>
-        <p>Playbooks, templates, and checklists &mdash; pull exactly what you need, when you need it</p>
+        <p>Playbooks, templates, checklists, and CLI tools &mdash; pull exactly what you need, when you need it.</p>
       </div>
       <div class="os-card">
         <div class="os-card-icon">&#127760;</div>
         <h3>Network</h3>
-        <p>Peer layer of senior tech professionals &mdash; no juniors, no noise</p>
+        <p>Peer layer of senior tech professionals. No juniors, no noise &mdash; just people who've been in the room.</p>
       </div>
     </div>
     <div class="audience-row">
@@ -288,128 +434,80 @@
     </div>
   </section>
 
-  <!-- PRODUCTS -->
-  <section id="products">
-    <div class="section-label">Products</div>
-    <h2 class="section-title">Open source tools that do real work</h2>
-    <p class="section-sub">Each product solves a specific problem senior engineers and consultants face repeatedly.</p>
-    <div class="products-grid">
-      <div class="product-card">
-        <span class="product-tag">Architecture</span>
-        <h3>archpilot</h3>
-        <p>Enterprise Architecture Standards Library. Turn any LLM into a Senior Enterprise Architect with 50+ rules, templates, and personas.</p>
-        <a href="https://github.com/gauravs19/archpilot" target="_blank" class="product-link">View on GitHub &rarr;</a>
-      </div>
-      <div class="product-card">
-        <span class="product-tag">CLI Tool</span>
-        <h3>archpilot-cli</h3>
-        <p>Scaffold production-grade enterprise architecture documents from your terminal. From vibe coding to verifiable engineering.</p>
-        <a href="https://github.com/gauravs19/archpilot-cli" target="_blank" class="product-link">View on GitHub &rarr;</a>
-      </div>
-      <div class="product-card">
-        <span class="product-tag">GitHub Action</span>
-        <h3>archpilot-reviewer</h3>
-        <p>Automated architecture governance for every Pull Request. Scores each artifact 0&ndash;100 and posts findings as PR comments.</p>
-        <a href="https://github.com/gauravs19/archpilot-reviewer" target="_blank" class="product-link">View on GitHub &rarr;</a>
-      </div>
-      <div class="product-card">
-        <span class="product-tag">Presales</span>
-        <h3>cadex</h3>
-        <p>Free, browser-only deal qualification framework for IT consulting presales. Score risk across architecture, delivery, and commercial dimensions.</p>
-        <a href="https://github.com/gauravs19/cadex" target="_blank" class="product-link">View on GitHub &rarr;</a>
-      </div>
-      <div class="product-card">
-        <span class="product-tag">Playbook</span>
-        <h3>presales-playbook</h3>
-        <p>The missing manual for technical sellers. Covers discovery, architecture defense, deal orchestration, and solutioning at enterprise scale.</p>
-        <a href="https://github.com/gauravs19/presales-playbook" target="_blank" class="product-link">View on GitHub &rarr;</a>
-      </div>
-      <div class="product-card">
-        <span class="product-tag">Reference Arch</span>
-        <h3>iiot-reference-architecture</h3>
-        <p>Production-grade reference architecture for Industrial IoT platforms handling 100K+ concurrent assets with distributed pipeline patterns.</p>
-        <a href="https://github.com/gauravs19/iiot-reference-architecture" target="_blank" class="product-link">View on GitHub &rarr;</a>
-      </div>
-    </div>
-  </section>
-
   <!-- SERVICES -->
-  <section id="services">
-    <div class="section-label">Services</div>
-    <h2 class="section-title">Senior-level problems need senior-level thinking</h2>
-    <p class="section-sub">Hands-on consulting for teams that have outgrown generic advice.</p>
-    <div class="services-grid">
-      <div class="service-card">
-        <div class="service-num">01</div>
-        <h3>Architecture Review &amp; Governance</h3>
-        <p>Standards, patterns, and automated governance for enterprise systems. From greenfield design to legacy modernisation.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-num">02</div>
-        <h3>Platform Engineering Advisory</h3>
-        <p>Distributed systems, cloud-native architecture, and Kubernetes at scale. Designing for 100K+ concurrent workloads.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-num">03</div>
-        <h3>Agentic AI / LLM Production Strategy</h3>
-        <p>Moving GenAI from prototype to production. Multi-agent orchestration, LLM observability, and RAG at enterprise scale.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-num">04</div>
-        <h3>Presales &amp; Technical Sales Enablement</h3>
-        <p>Solutioning frameworks, technical discovery, and architecture defense for complex enterprise deals.</p>
-      </div>
-    </div>
-  </section>
+  <div class="services-bg" id="services">
+    <div class="services-inner">
+      <div class="section-label">Services</div>
+      <h2 class="section-title">When you need more than a tool</h2>
+      <p class="section-sub">Hands-on consulting for teams and leaders who've outgrown generic advice. Engagements are focused, senior, and outcome-driven.</p>
+      <div class="services-grid">
 
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="about-card">
-      <div>
-        <div class="section-label">About</div>
-        <h2>Gaurav Sharma</h2>
-        <p>Engineering Leader and Solutions Architect designing high-scale, distributed platforms. Focused on translating complex business objectives into resilient technical strategies that empower engineering teams.</p>
-        <p>Writing about the hardest tradeoffs in enterprise architecture, distributed systems, and technical leadership at Tech Tradeoff.</p>
-        <div class="about-links">
-          <a href="https://www.linkedin.com/in/gauravs19/" target="_blank" class="about-link">LinkedIn</a>
-          <a href="https://techtradeoff.substack.com" target="_blank" class="about-link">Substack</a>
-          <a href="https://gauravs19.github.io/portfolio/" target="_blank" class="about-link">Portfolio</a>
-          <a href="https://github.com/gauravs19" target="_blank" class="about-link">GitHub</a>
+        <div class="service-card">
+          <div class="service-num">01</div>
+          <h3>Architecture Review &amp; Governance</h3>
+          <p>Deep review of your current architecture against enterprise standards. Establish patterns, guardrails, and automated governance that scales with your team.</p>
+          <ul class="service-bullets">
+            <li>Architecture standards definition</li>
+            <li>ADR process &amp; tooling setup</li>
+            <li>Automated PR-level governance</li>
+            <li>Greenfield design &amp; legacy modernisation</li>
+          </ul>
         </div>
-      </div>
-      <div class="about-stats">
-        <div class="stat">
-          <div class="stat-num">15+</div>
-          <div class="stat-label">Years in enterprise tech</div>
+
+        <div class="service-card">
+          <div class="service-num">02</div>
+          <h3>Platform Engineering Advisory</h3>
+          <p>For teams building or scaling distributed systems, cloud-native platforms, or Kubernetes-based infrastructure at enterprise load.</p>
+          <ul class="service-bullets">
+            <li>Distributed systems design</li>
+            <li>Kubernetes at 100K+ workloads</li>
+            <li>Platform reliability &amp; observability</li>
+            <li>IIoT &amp; edge architecture</li>
+          </ul>
         </div>
-        <div class="stat">
-          <div class="stat-num">6</div>
-          <div class="stat-label">Open source products</div>
+
+        <div class="service-card">
+          <div class="service-num">03</div>
+          <h3>Agentic AI / LLM Production Strategy</h3>
+          <p>Moving GenAI from prototype to production. Strategy, architecture, and governance for teams running real AI workloads at scale.</p>
+          <ul class="service-bullets">
+            <li>Multi-agent orchestration design</li>
+            <li>LLM observability &amp; evaluation</li>
+            <li>RAG architecture at enterprise scale</li>
+            <li>AI governance &amp; risk frameworks</li>
+          </ul>
         </div>
-        <div class="stat">
-          <div class="stat-num">100K+</div>
-          <div class="stat-label">Asset scale architected</div>
+
+        <div class="service-card">
+          <div class="service-num">04</div>
+          <h3>Presales &amp; Technical Sales Enablement</h3>
+          <p>For sales engineers, solutions architects, and technical leaders who need to win complex enterprise deals with rigour, not just demos.</p>
+          <ul class="service-bullets">
+            <li>Discovery &amp; qualification frameworks</li>
+            <li>Architecture defense coaching</li>
+            <li>Deal orchestration playbooks</li>
+            <li>Technical win strategy</li>
+          </ul>
         </div>
-        <div class="stat">
-          <div class="stat-num">4</div>
-          <div class="stat-label">Core service domains</div>
-        </div>
+
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- CTA -->
-  <div class="cta-section">
-    <h2>Let&#8217;s work on a hard problem together</h2>
-    <p>Architecture reviews, platform strategy, AI production rollouts, or presales enablement &mdash; reach out.</p>
-    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-      <a href="https://www.linkedin.com/in/gauravs19/" target="_blank" class="btn btn-primary">Connect on LinkedIn</a>
-      <a href="https://techtradeoff.substack.com" target="_blank" class="btn btn-outline">Read the Newsletter</a>
+  <div class="cta-wrap">
+    <div class="cta-section">
+      <h2>Bring a hard problem. Leave with a plan.</h2>
+      <p>Architecture decisions, platform strategy, AI production rollouts, or presales deals &mdash; if it's complex and senior, it belongs here.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="https://www.linkedin.com/in/gauravs19/" target="_blank" class="btn btn-primary">Connect on LinkedIn</a>
+        <a href="https://techtradeoff.substack.com" target="_blank" class="btn btn-outline">Read the Newsletter</a>
+      </div>
     </div>
   </div>
 
   <footer>
-    <p>&copy; 2026 <span>TechTradeoff</span> &middot; Built by Gaurav Sharma &middot; <a href="https://github.com/techtradeoff" target="_blank">GitHub</a></p>
+    <p>&copy; 2026 <span>TechTradeoff</span> &middot; <a href="about.html">About</a> &middot; <a href="https://github.com/techtradeoff" target="_blank">GitHub</a> &middot; <a href="https://techtradeoff.substack.com" target="_blank">Newsletter</a></p>
   </footer>
 
 </body>

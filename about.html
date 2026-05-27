@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About &mdash; TechTradeoff</title>
+  <meta name="description" content="TechTradeoff is built by Gaurav Sharma, Engineering Leader and Solutions Architect with 15+ years in enterprise tech." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f8f9fc; --surface: #ffffff; --surface2: #f1f3f9;
+      --border: #e2e6ef; --accent: #4f46e5; --accent2: #7c3aed;
+      --text: #0f172a; --muted: #64748b; --muted2: #94a3b8;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent2); }
+
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 200;
+      background: rgba(248,249,252,0.92); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px;
+    }
+    .nav-brand { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.03em; color: var(--text); }
+    .nav-brand span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
+    .nav-links a { font-size: 0.875rem; color: var(--muted); padding: 0.5rem 0.75rem; border-radius: 6px; transition: background 0.15s, color 0.15s; }
+    .nav-links a:hover { background: var(--surface2); color: var(--text); }
+    .nav-links a.active { color: var(--accent); font-weight: 600; }
+    .nav-cta { background: var(--accent); color: #fff !important; padding: 0.45rem 1rem; border-radius: 6px; font-size: 0.875rem; font-weight: 600; }
+    .nav-cta:hover { background: var(--accent2) !important; color: #fff !important; }
+
+    .page-hero {
+      padding: 9rem 2rem 4rem; max-width: 800px; margin: 0 auto; text-align: center;
+    }
+    .page-hero .label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 1rem; }
+    .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.04em; margin-bottom: 1rem; }
+    .page-hero p { color: var(--muted); font-size: 1.05rem; max-width: 580px; margin: 0 auto; }
+
+    .about-body { max-width: 800px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+
+    .about-profile {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 2.5rem;
+      display: grid; grid-template-columns: auto 1fr; gap: 2rem;
+      align-items: start; margin-bottom: 3rem;
+    }
+    .avatar {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; font-weight: 800; color: #fff; flex-shrink: 0;
+    }
+    .profile-name { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .profile-title { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.25rem; }
+    .profile-links { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .profile-link {
+      padding: 0.4rem 0.9rem; border-radius: 7px;
+      background: rgba(79,70,229,0.07); border: 1px solid rgba(79,70,229,0.18);
+      color: var(--accent); font-size: 0.82rem; font-weight: 600;
+      transition: all 0.15s;
+    }
+    .profile-link:hover { background: var(--accent); color: #fff; }
+
+    .about-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1rem; margin-bottom: 3rem;
+    }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.25rem; text-align: center;
+    }
+    .stat-num { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.04em; color: var(--accent); }
+    .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
+
+    .about-section { margin-bottom: 2.5rem; }
+    .about-section h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    .about-section p { color: var(--muted); font-size: 0.95rem; line-height: 1.75; margin-bottom: 0.75rem; }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+    .tag {
+      background: var(--surface2); border: 1px solid var(--border);
+      padding: 0.3rem 0.75rem; border-radius: 6px;
+      font-size: 0.8rem; color: var(--text);
+    }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 2rem; text-align: center;
+      color: var(--muted2); font-size: 0.8rem; background: var(--surface);
+    }
+    footer span { color: var(--accent); }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--accent); }
+
+    @media (max-width: 640px) {
+      .about-profile { grid-template-columns: 1fr; }
+      .about-stats { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-brand">Tech<span>Tradeoff</span></a>
+    <div class="nav-links">
+      <a href="index.html#os">The OS</a>
+      <a href="index.html#services">Services</a>
+      <a href="about.html" class="active">About</a>
+      <a href="https://techtradeoff.substack.com" target="_blank">Newsletter</a>
+      <a href="https://www.linkedin.com/in/gauravs19/" target="_blank" class="nav-cta">Get in Touch</a>
+    </div>
+  </nav>
+
+  <div class="page-hero">
+    <div class="label">About</div>
+    <h1>The person behind the OS</h1>
+    <p>TechTradeoff is built by a practitioner, for practitioners. Not a content factory &mdash; a working engineer sharing what actually holds up under pressure.</p>
+  </div>
+
+  <div class="about-body">
+
+    <div class="about-profile">
+      <div class="avatar">G</div>
+      <div>
+        <div class="profile-name">Gaurav Sharma</div>
+        <div class="profile-title">Engineering Leader &amp; Solutions Architect</div>
+        <div class="profile-links">
+          <a href="https://www.linkedin.com/in/gauravs19/" target="_blank" class="profile-link">LinkedIn</a>
+          <a href="https://techtradeoff.substack.com" target="_blank" class="profile-link">Substack</a>
+          <a href="https://gauravs19.github.io/portfolio/" target="_blank" class="profile-link">Portfolio</a>
+          <a href="https://github.com/gauravs19" target="_blank" class="profile-link">GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Years in enterprise tech</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Open source products</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">100K+</div>
+        <div class="stat-label">Asset scale architected</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Core service domains</div>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <h2>What I do</h2>
+      <p>I design high-scale, distributed platforms for enterprise organisations &mdash; translating complex business objectives into resilient technical strategies that engineering teams can actually execute. Most of my work sits at the intersection of architecture, platform engineering, and agentic AI.</p>
+      <p>On the commercial side, I've run technical presales on large enterprise deals: solutioning, discovery, architecture defence, and the structured thinking that turns complex requirements into a win.</p>
+    </div>
+
+    <div class="about-section">
+      <h2>Why TechTradeoff</h2>
+      <p>After spending years in senior roles, I kept running into the same gap: senior-level problems with no senior-level tools. LLMs that gave beginner answers. Playbooks written for teams of 10. Documentation patterns that didn't survive real scrutiny.</p>
+      <p>TechTradeoff started as a newsletter &mdash; deconstructing the hardest tradeoffs in enterprise architecture, distributed systems, and technical leadership. The open source tools came from that same place: things I built because I needed them, and made public because others do too.</p>
+    </div>
+
+    <div class="about-section">
+      <h2>Domain focus</h2>
+      <div class="tag-row">
+        <span class="tag">Enterprise Architecture</span>
+        <span class="tag">Distributed Systems</span>
+        <span class="tag">Platform Engineering</span>
+        <span class="tag">Kubernetes at Scale</span>
+        <span class="tag">Agentic AI / LLM Production</span>
+        <span class="tag">Industrial IoT</span>
+        <span class="tag">Technical Presales</span>
+        <span class="tag">Architecture Governance</span>
+        <span class="tag">Cloud-Native Design</span>
+        <span class="tag">GenAI Strategy</span>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <h2>Writing</h2>
+      <p>
+        The <a href="https://techtradeoff.substack.com" target="_blank">Tech Tradeoff newsletter on Substack</a> is where I work through the decisions that don't have clean answers &mdash; architectural tradeoffs, distributed systems patterns, technical leadership, and what it actually takes to move GenAI from demo to production.
+      </p>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 <span>TechTradeoff</span> &middot; <a href="index.html">Home</a> &middot; <a href="https://github.com/techtradeoff" target="_blank">GitHub</a> &middot; <a href="https://techtradeoff.substack.com" target="_blank">Newsletter</a></p>
+  </footer>
+
+</body>
+</html>
