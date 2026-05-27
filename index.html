@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TechTradeoff &mdash; Tech OS for Senior Engineering Professionals</title>
-  <meta name="description" content="Tools, frameworks, and playbooks for Staff Engineers, Enterprise Architects, CTOs, and Senior Consultants navigating hard architectural tradeoffs." />
+  <title>TechTradeoff &mdash; The OS for Senior Tech Professionals</title>
+  <meta name="description" content="Tools, frameworks, and playbooks for Staff Engineers, Enterprise Architects, CTOs, and Senior Consultants. Open source. Practitioner-built. No beginner ramp." />
+  <meta property="og:title" content="TechTradeoff &mdash; The OS for Senior Tech Professionals" />
+  <meta property="og:description" content="Most advice stops at year two. TechTradeoff is built for professionals in year twelve." />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -15,525 +17,723 @@
       --border: #e2e6ef;
       --accent: #4f46e5;
       --accent2: #7c3aed;
-      --accent-light: rgba(79,70,229,0.07);
       --text: #0f172a;
       --muted: #64748b;
       --muted2: #94a3b8;
+      --dark: #080c14;
+      --dark-surface: #0f1623;
+      --dark-border: rgba(255,255,255,0.07);
     }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
     a { color: var(--accent); text-decoration: none; }
     a:hover { color: var(--accent2); }
 
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; width: 100%; z-index: 200;
-      background: rgba(248,249,252,0.92);
-      backdrop-filter: blur(14px);
+      background: rgba(248,249,252,0.93); backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 60px;
+      padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; height: 60px;
     }
-    .nav-brand {
-      font-size: 1.1rem; font-weight: 800; letter-spacing: -0.03em; color: var(--text);
-    }
+    .nav-brand { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.03em; color: var(--text); }
     .nav-brand span { color: var(--accent); }
-
-    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
-    .nav-links > a, .nav-links > .nav-dropdown > .nav-dropbtn {
-      font-size: 0.875rem; color: var(--muted); padding: 0.5rem 0.75rem;
+    .nav-links { display: flex; align-items: center; gap: 0.15rem; }
+    .nav-links > a, .nav-dropbtn {
+      font-size: 0.85rem; color: var(--muted); padding: 0.45rem 0.7rem;
       border-radius: 6px; transition: background 0.15s, color 0.15s;
       background: none; border: none; cursor: pointer; font-family: inherit;
       display: flex; align-items: center; gap: 0.3rem;
     }
-    .nav-links > a:hover, .nav-links > .nav-dropdown > .nav-dropbtn:hover {
-      background: var(--surface2); color: var(--text);
-    }
-
+    .nav-links > a:hover, .nav-dropbtn:hover { background: var(--surface2); color: var(--text); }
     .nav-dropdown { position: relative; }
-    .nav-dropbtn svg { transition: transform 0.2s; }
     .nav-dropdown:hover .nav-dropbtn svg { transform: rotate(180deg); }
-
+    .nav-dropbtn svg { transition: transform 0.2s; }
     .dropdown-menu {
-      display: none;
-      position: absolute; top: calc(100% + 8px); left: 0;
+      display: none; position: absolute; top: calc(100% + 8px); left: 0;
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 12px; padding: 0.5rem;
-      min-width: 240px;
-      box-shadow: 0 8px 32px rgba(15,23,42,0.1);
-      z-index: 300;
+      border-radius: 14px; padding: 0.5rem; min-width: 260px;
+      box-shadow: 0 12px 40px rgba(15,23,42,0.12); z-index: 300;
     }
     .nav-dropdown:hover .dropdown-menu { display: block; }
     .dropdown-item {
-      display: flex; flex-direction: column;
-      padding: 0.65rem 0.85rem; border-radius: 8px;
-      transition: background 0.15s;
-      color: var(--text);
+      display: flex; flex-direction: column; padding: 0.7rem 0.9rem;
+      border-radius: 8px; transition: background 0.15s; color: var(--text);
     }
     .dropdown-item:hover { background: var(--surface2); color: var(--text); }
-    .dropdown-item-name { font-size: 0.875rem; font-weight: 600; }
-    .dropdown-item-desc { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
-    .dropdown-divider { height: 1px; background: var(--border); margin: 0.4rem 0; }
-
+    .di-name { font-size: 0.875rem; font-weight: 600; }
+    .di-desc { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
+    .dropdown-divider { height: 1px; background: var(--border); margin: 0.4rem 0.5rem; }
     .nav-cta {
-      background: var(--accent); color: #fff !important;
-      padding: 0.45rem 1rem; border-radius: 6px; font-size: 0.875rem; font-weight: 600;
-      transition: background 0.15s;
+      background: var(--accent); color: #fff !important; padding: 0.4rem 1rem;
+      border-radius: 6px; font-size: 0.85rem; font-weight: 600; transition: background 0.15s;
     }
     .nav-cta:hover { background: var(--accent2) !important; color: #fff !important; }
 
     /* ── HERO ── */
     .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center;
-      padding: 7rem 2rem 5rem;
-      background: radial-gradient(ellipse 80% 55% at 50% 0%, rgba(79,70,229,0.09), transparent);
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 7rem 2rem 4rem;
+      background: radial-gradient(ellipse 90% 60% at 50% -10%, rgba(79,70,229,0.1), transparent 70%);
     }
     .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      background: var(--accent-light); border: 1px solid rgba(79,70,229,0.22);
-      color: var(--accent); font-size: 0.72rem; font-weight: 700;
-      padding: 0.3rem 0.85rem; border-radius: 100px;
-      text-transform: uppercase; letter-spacing: 0.1em;
-      margin-bottom: 2rem;
+      background: rgba(79,70,229,0.08); border: 1px solid rgba(79,70,229,0.2);
+      color: var(--accent); font-size: 0.7rem; font-weight: 700;
+      padding: 0.3rem 0.9rem; border-radius: 100px;
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2.25rem;
     }
     .hero h1 {
-      font-size: clamp(2.4rem, 6vw, 4.75rem);
-      font-weight: 800; letter-spacing: -0.045em; line-height: 1.04;
-      margin-bottom: 1.5rem; max-width: 900px;
+      font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 900;
+      letter-spacing: -0.05em; line-height: 1.0; margin-bottom: 1.75rem; max-width: 900px;
     }
-    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero h1 .line2 { color: var(--accent); display: block; }
     .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.2rem);
-      color: var(--muted); max-width: 620px; margin: 0 auto 1.75rem; line-height: 1.7;
+      font-size: clamp(1rem, 2vw, 1.2rem); color: var(--muted);
+      max-width: 580px; margin: 0 auto 0.75rem; line-height: 1.75;
     }
-    .hero-meta {
-      font-size: 0.82rem; color: var(--muted2); margin-bottom: 2.5rem;
+    .hero-contrast {
+      font-size: 0.9rem; color: var(--muted2); margin-bottom: 2.5rem;
+      font-style: italic;
     }
-    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 3rem; }
     .btn {
-      padding: 0.75rem 1.75rem; border-radius: 8px;
-      font-size: 0.9rem; font-weight: 600; cursor: pointer;
-      transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.75rem 1.75rem; border-radius: 8px; font-size: 0.9rem;
+      font-weight: 600; cursor: pointer; transition: all 0.2s;
+      display: inline-flex; align-items: center; gap: 0.4rem;
     }
     .btn-primary { background: var(--accent); color: #fff; border: none; }
-    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(79,70,229,0.25); }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(79,70,229,0.3); }
     .btn-outline { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
     .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
-    .hero-trust {
-      margin-top: 3.5rem; display: flex; align-items: center; gap: 2rem;
-      flex-wrap: wrap; justify-content: center;
+    .trust-bar {
+      display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; justify-content: center;
+      padding-top: 2.5rem; border-top: 1px solid var(--border); width: 100%; max-width: 700px;
     }
-    .trust-item { font-size: 0.8rem; color: var(--muted2); display: flex; align-items: center; gap: 0.4rem; }
-    .trust-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: 0.5; }
+    .trust-stat { text-align: center; }
+    .trust-num { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.04em; color: var(--text); }
+    .trust-label { font-size: 0.73rem; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.06em; }
+    .trust-sep { width: 1px; height: 32px; background: var(--border); }
+
+    /* ── MANIFESTO STRIP ── */
+    .manifesto {
+      background: var(--dark); color: #f1f5f9;
+      padding: 3.5rem 2rem; text-align: center; overflow: hidden;
+    }
+    .manifesto-inner { max-width: 1100px; margin: 0 auto; }
+    .manifesto-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem; margin-top: 2rem;
+    }
+    .manifesto-item { text-align: left; }
+    .manifesto-item h3 { font-size: 1rem; font-weight: 700; color: #e2e8f0; margin-bottom: 0.4rem; }
+    .manifesto-item p { font-size: 0.82rem; color: #64748b; line-height: 1.6; }
+    .manifesto-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #6366f1; }
+    .manifesto-title { font-size: clamp(1.2rem, 2.5vw, 1.6rem); font-weight: 700; color: #f1f5f9; margin-top: 0.5rem; letter-spacing: -0.02em; }
+
+    /* ── COMPARISON ── */
+    .comparison-section { background: var(--dark-surface); padding: 5rem 2rem; }
+    .comparison-inner { max-width: 1000px; margin: 0 auto; }
+    .comp-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #818cf8; margin-bottom: 0.75rem; }
+    .comp-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; letter-spacing: -0.03em; color: #f1f5f9; margin-bottom: 0.75rem; }
+    .comp-sub { color: #64748b; font-size: 0.95rem; margin-bottom: 2.75rem; max-width: 520px; }
+
+    .comp-table { width: 100%; border-collapse: collapse; }
+    .comp-table th {
+      font-size: 0.78rem; font-weight: 700; padding: 0.85rem 1rem;
+      text-align: center; color: #94a3b8; border-bottom: 1px solid var(--dark-border);
+      letter-spacing: 0.04em;
+    }
+    .comp-table th.col-us { color: #a5b4fc; }
+    .comp-table td {
+      font-size: 0.85rem; padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--dark-border); color: #94a3b8;
+      text-align: center;
+    }
+    .comp-table td.row-label { text-align: left; color: #cbd5e1; font-weight: 500; }
+    .comp-table tr:last-child td { border-bottom: none; }
+    .comp-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .col-us { background: rgba(99,102,241,0.06); }
+    .check { color: #34d399; font-size: 1rem; }
+    .cross { color: #475569; font-size: 1rem; }
+    .partial { color: #fbbf24; font-size: 0.75rem; font-weight: 600; }
 
     /* ── PAIN ── */
-    .pain-section {
-      background: var(--text);
-      color: #f8fafc;
-      padding: 5rem 2rem;
-    }
+    .pain-section { background: var(--dark); color: #f8fafc; padding: 5rem 2rem; }
     .pain-inner { max-width: 1100px; margin: 0 auto; }
-    .pain-label {
-      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.12em; color: #818cf8; margin-bottom: 1rem;
-    }
-    .pain-title {
-      font-size: clamp(1.75rem, 3vw, 2.5rem);
-      font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.75rem; color: #f1f5f9;
-    }
-    .pain-sub { color: #94a3b8; max-width: 560px; margin-bottom: 3rem; font-size: 1rem; }
-
-    .pain-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
-    }
+    .pain-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #818cf8; margin-bottom: 0.75rem; }
+    .pain-title { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.75rem; color: #f1f5f9; }
+    .pain-sub { color: #64748b; max-width: 560px; margin-bottom: 3rem; font-size: 0.95rem; line-height: 1.7; }
+    .pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
     .pain-card {
       background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 16px; padding: 2rem;
+      border-radius: 16px; padding: 2rem; display: flex; flex-direction: column;
       transition: border-color 0.2s, background 0.2s;
-      display: flex; flex-direction: column;
     }
     .pain-card:hover { border-color: rgba(129,140,248,0.4); background: rgba(255,255,255,0.05); }
-    .pain-card-num {
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
-      color: #818cf8; margin-bottom: 1.1rem; text-transform: uppercase;
-    }
+    .pain-card-num { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; color: #818cf8; margin-bottom: 1.1rem; text-transform: uppercase; }
     .pain-card h3 { font-size: 1.05rem; font-weight: 700; color: #f1f5f9; margin-bottom: 1rem; line-height: 1.4; }
     .pain-scenario {
       font-size: 0.85rem; color: #94a3b8; line-height: 1.7; margin-bottom: 0.85rem;
-      padding: 0.85rem 1rem;
-      background: rgba(255,255,255,0.04); border-left: 2px solid rgba(129,140,248,0.35);
-      border-radius: 0 8px 8px 0; font-style: italic;
+      padding: 0.85rem 1rem; background: rgba(255,255,255,0.04);
+      border-left: 2px solid rgba(129,140,248,0.4); border-radius: 0 8px 8px 0; font-style: italic;
     }
     .pain-card p { font-size: 0.85rem; color: #94a3b8; line-height: 1.7; margin-bottom: 0.6rem; }
-    .pain-need {
-      font-size: 0.82rem; color: #c7d2fe; line-height: 1.65; margin-top: 0.5rem;
-      padding-top: 0.85rem; border-top: 1px solid rgba(255,255,255,0.06);
-    }
+    .pain-need { font-size: 0.82rem; color: #c7d2fe; line-height: 1.65; margin-top: 0.5rem; padding-top: 0.85rem; border-top: 1px solid rgba(255,255,255,0.06); }
     .pain-need strong { color: #e0e7ff; }
-    .pain-card .pain-tool {
-      margin-top: auto; padding-top: 1.25rem; font-size: 0.75rem; font-weight: 600;
-      color: #818cf8; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
-    }
+    .pain-tool { margin-top: auto; padding-top: 1.25rem; font-size: 0.75rem; font-weight: 600; color: #818cf8; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
     .pain-tool-badge {
       background: rgba(129,140,248,0.12); border: 1px solid rgba(129,140,248,0.25);
-      padding: 0.2rem 0.6rem; border-radius: 4px; font-family: monospace; font-size: 0.72rem;
-      color: #a5b4fc;
+      padding: 0.2rem 0.6rem; border-radius: 4px; font-family: monospace; font-size: 0.72rem; color: #a5b4fc;
     }
 
-    /* ── SECTIONS ── */
-    section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
-    .section-label {
-      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.12em; color: var(--accent); margin-bottom: 1rem;
-    }
-    .section-title {
-      font-size: clamp(1.75rem, 3vw, 2.5rem);
-      font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.75rem;
-    }
-    .section-sub { color: var(--muted); max-width: 560px; margin-bottom: 3rem; font-size: 1rem; }
-
-    /* ── OS LAYERS ── */
-    .os-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem; margin-bottom: 2rem;
-    }
+    /* ── OS ── */
+    .os-section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 0.75rem; }
+    .section-title { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.75rem; }
+    .section-sub { color: var(--muted); max-width: 560px; margin-bottom: 3rem; font-size: 0.95rem; line-height: 1.7; }
+    .os-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-bottom: 2rem; }
     .os-card {
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.5rem;
+      padding: 1.5rem 1.25rem; transition: border-color 0.2s, box-shadow 0.2s, z-index 0s;
+      position: relative;
+    }
+    .os-card:not(:last-child) { border-right: none; }
+    .os-card:first-child { border-radius: 12px 0 0 12px; }
+    .os-card:last-child { border-radius: 0 12px 12px 0; }
+    .os-card:hover { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); z-index: 1; }
+    .os-layer-tag { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.75rem; }
+    .os-card-icon { font-size: 1.4rem; margin-bottom: 0.65rem; }
+    .os-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .os-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+    .audience-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .audience-chip { background: var(--surface); border: 1px solid var(--border); padding: 0.4rem 0.9rem; border-radius: 100px; font-size: 0.82rem; color: var(--text); }
+
+    /* ── FEATURED THINKING ── */
+    .thinking-section { background: var(--surface2); padding: 5rem 2rem; }
+    .thinking-inner { max-width: 1100px; margin: 0 auto; }
+    .thinking-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .thinking-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.75rem; display: flex; flex-direction: column;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .os-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(79,70,229,0.07); }
-    .os-card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
-    .os-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .os-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
-
-    .audience-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-    .audience-chip {
-      background: var(--surface); border: 1px solid var(--border);
-      padding: 0.4rem 0.9rem; border-radius: 100px;
-      font-size: 0.82rem; color: var(--text);
-    }
+    .thinking-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(79,70,229,0.08); }
+    .thinking-tag { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.85rem; }
+    .thinking-card h3 { font-size: 1rem; font-weight: 700; line-height: 1.4; margin-bottom: 0.75rem; }
+    .thinking-card p { font-size: 0.84rem; color: var(--muted); line-height: 1.7; flex: 1; margin-bottom: 1.25rem; }
+    .thinking-link { font-size: 0.8rem; font-weight: 600; color: var(--accent); display: flex; align-items: center; gap: 0.3rem; }
 
     /* ── SERVICES ── */
-    .services-bg { background: var(--surface2); }
-    .services-inner { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem; }
-    .services-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.25rem;
-    }
+    .services-section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.25rem; }
     .service-card {
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 14px; padding: 2rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      border-radius: 14px; padding: 2rem; transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .service-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(79,70,229,0.07); }
-    .service-num { font-size: 0.7rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; letter-spacing: 0.08em; }
+    .service-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(79,70,229,0.07); }
+    .service-num { font-size: 0.68rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; letter-spacing: 0.08em; }
     .service-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
-    .service-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; margin-bottom: 1rem; }
+    .service-card p { font-size: 0.84rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
     .service-bullets { list-style: none; }
-    .service-bullets li {
-      font-size: 0.8rem; color: var(--muted); padding: 0.2rem 0;
-      display: flex; align-items: flex-start; gap: 0.5rem;
-    }
+    .service-bullets li { font-size: 0.8rem; color: var(--muted); padding: 0.2rem 0; display: flex; align-items: flex-start; gap: 0.5rem; }
     .service-bullets li::before { content: "&#8594;"; color: var(--accent); flex-shrink: 0; }
+
+    /* ── FOR / NOT FOR ── */
+    .for-section { background: var(--dark); padding: 5rem 2rem; }
+    .for-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .for-col h3 { font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .for-col.yes h3 { color: #34d399; }
+    .for-col.no h3 { color: #f87171; }
+    .for-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .for-list li { font-size: 0.875rem; color: #94a3b8; display: flex; align-items: flex-start; gap: 0.75rem; line-height: 1.5; }
+    .for-list li .ico { flex-shrink: 0; margin-top: 0.1rem; font-size: 0.8rem; }
+    .for-col.yes .ico { color: #34d399; }
+    .for-col.no .ico { color: #f87171; }
+    .for-headline { text-align: center; margin-bottom: 3rem; }
+    .for-headline .section-label { color: #818cf8; }
+    .for-headline .section-title { color: #f1f5f9; }
 
     /* ── CTA ── */
     .cta-wrap { padding: 0 2rem 5rem; }
     .cta-section {
       text-align: center; max-width: 1100px; margin: 0 auto;
-      background: var(--surface);
-      border: 1px solid var(--border); border-radius: 20px;
-      padding: 4.5rem 2rem;
-      background: linear-gradient(135deg, rgba(79,70,229,0.04) 0%, rgba(124,58,237,0.04) 100%);
+      border: 1px solid var(--border); border-radius: 20px; padding: 5rem 2rem;
+      background: linear-gradient(135deg, rgba(79,70,229,0.05) 0%, rgba(124,58,237,0.05) 100%);
     }
-    .cta-section h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; margin-bottom: 1rem; }
-    .cta-section p { color: var(--muted); margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .cta-section h2 { font-size: clamp(1.6rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .cta-section p { color: var(--muted); margin-bottom: 2.5rem; max-width: 480px; margin-left: auto; margin-right: auto; font-size: 1rem; line-height: 1.7; }
 
     /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem; text-align: center;
-      color: var(--muted2); font-size: 0.8rem;
-      background: var(--surface);
-    }
-    footer span { color: var(--accent); }
-    footer a { color: var(--muted); }
-    footer a:hover { color: var(--accent); }
+    footer { border-top: 1px solid var(--border); padding: 2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; background: var(--surface); }
+    .footer-brand { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+    .footer-brand span { color: var(--accent); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.8rem; color: var(--muted2); transition: color 0.15s; }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy { font-size: 0.78rem; color: var(--muted2); }
 
+    @media (max-width: 900px) {
+      .os-grid { grid-template-columns: repeat(3, 1fr); }
+      .os-card:not(:last-child) { border-right: 1px solid var(--border); }
+      .os-card { border-radius: 0; }
+      .os-grid .os-card:first-child { border-radius: 12px 0 0 0; }
+    }
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .pain-grid { grid-template-columns: 1fr; }
+      .os-grid { grid-template-columns: 1fr 1fr; }
+      .for-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .trust-sep { display: none; }
+      footer { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-brand">Tech<span>Tradeoff</span></div>
-    <div class="nav-links">
-      <a href="#os">The OS</a>
+<!-- ── NAV ── -->
+<nav>
+  <a href="index.html" style="color:inherit;" class="nav-brand">Tech<span>Tradeoff</span></a>
+  <div class="nav-links">
+    <a href="#os">The OS</a>
 
-      <div class="nav-dropdown">
-        <button class="nav-dropbtn">
-          Products
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="https://github.com/gauravs19/archpilot" target="_blank">
-            <span class="dropdown-item-name">archpilot</span>
-            <span class="dropdown-item-desc">Enterprise Architecture Standards Library</span>
-          </a>
-          <a class="dropdown-item" href="https://github.com/gauravs19/archpilot-cli" target="_blank">
-            <span class="dropdown-item-name">archpilot-cli</span>
-            <span class="dropdown-item-desc">Scaffold architecture docs from your terminal</span>
-          </a>
-          <a class="dropdown-item" href="https://github.com/gauravs19/archpilot-reviewer" target="_blank">
-            <span class="dropdown-item-name">archpilot-reviewer</span>
-            <span class="dropdown-item-desc">Automated governance on every PR</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="https://github.com/gauravs19/cadex" target="_blank">
-            <span class="dropdown-item-name">cadex</span>
-            <span class="dropdown-item-desc">Deal qualification framework for presales</span>
-          </a>
-          <a class="dropdown-item" href="https://github.com/gauravs19/presales-playbook" target="_blank">
-            <span class="dropdown-item-name">presales-playbook</span>
-            <span class="dropdown-item-desc">The missing manual for technical sellers</span>
-          </a>
-          <a class="dropdown-item" href="https://github.com/gauravs19/iiot-reference-architecture" target="_blank">
-            <span class="dropdown-item-name">iiot-reference-architecture</span>
-            <span class="dropdown-item-desc">Production IIoT platform reference architecture</span>
-          </a>
-        </div>
+    <div class="nav-dropdown">
+      <button class="nav-dropbtn">
+        Products
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="https://github.com/gauravs19/archpilot" target="_blank">
+          <span class="di-name">archpilot</span>
+          <span class="di-desc">Enterprise Architecture Standards Library</span>
+        </a>
+        <a class="dropdown-item" href="https://github.com/gauravs19/archpilot-cli" target="_blank">
+          <span class="di-name">archpilot-cli</span>
+          <span class="di-desc">Scaffold architecture docs from your terminal</span>
+        </a>
+        <a class="dropdown-item" href="https://github.com/gauravs19/archpilot-reviewer" target="_blank">
+          <span class="di-name">archpilot-reviewer</span>
+          <span class="di-desc">Automated governance on every PR</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="https://github.com/gauravs19/cadex" target="_blank">
+          <span class="di-name">cadex</span>
+          <span class="di-desc">Deal qualification framework for presales</span>
+        </a>
+        <a class="dropdown-item" href="https://github.com/gauravs19/presales-playbook" target="_blank">
+          <span class="di-name">presales-playbook</span>
+          <span class="di-desc">The missing manual for technical sellers</span>
+        </a>
+        <a class="dropdown-item" href="https://github.com/gauravs19/iiot-reference-architecture" target="_blank">
+          <span class="di-name">iiot-reference-architecture</span>
+          <span class="di-desc">Production IIoT platform reference architecture</span>
+        </a>
+      </div>
+    </div>
+
+    <a href="#services">Services</a>
+    <a href="#thinking">Thinking</a>
+    <a href="about.html">About</a>
+    <a href="https://techtradeoff.substack.com" target="_blank">Newsletter</a>
+    <a href="https://www.linkedin.com/in/gauravs19/" target="_blank" class="nav-cta">Get in Touch</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-eyebrow">&#9889; Open Source &middot; Practitioner-Built &middot; Senior-Only</div>
+  <h1>Most advice stops<br/><span class="line2">at year two.</span></h1>
+  <p class="hero-sub">
+    TechTradeoff is built for the professionals in year twelve &mdash; when the tradeoffs are company-level, the stakes are real, and &ldquo;just Google it&rdquo; stopped working.
+  </p>
+  <p class="hero-contrast">Tools, frameworks, and playbooks. Not tutorials. Not theory. Not another certification.</p>
+  <div class="hero-cta">
+    <a href="#pain" class="btn btn-primary">See What We Solve &#8594;</a>
+    <a href="https://techtradeoff.substack.com" target="_blank" class="btn btn-outline">Read the Newsletter</a>
+  </div>
+  <div class="trust-bar">
+    <div class="trust-stat">
+      <div class="trust-num">6</div>
+      <div class="trust-label">Open Source Tools</div>
+    </div>
+    <div class="trust-sep"></div>
+    <div class="trust-stat">
+      <div class="trust-num">100K+</div>
+      <div class="trust-label">Asset Scale</div>
+    </div>
+    <div class="trust-sep"></div>
+    <div class="trust-stat">
+      <div class="trust-num">4</div>
+      <div class="trust-label">Service Domains</div>
+    </div>
+    <div class="trust-sep"></div>
+    <div class="trust-stat">
+      <div class="trust-num">15+</div>
+      <div class="trust-label">Years Practitioner</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MANIFESTO ── -->
+<div class="manifesto">
+  <div class="manifesto-inner">
+    <div class="manifesto-label">Our Principles</div>
+    <div class="manifesto-title">What we believe about senior engineering work</div>
+    <div class="manifesto-grid">
+      <div class="manifesto-item">
+        <h3>Depth over breadth.</h3>
+        <p>One decision framework that holds under pressure beats ten that collapse in a review board.</p>
+      </div>
+      <div class="manifesto-item">
+        <h3>Practitioners only.</h3>
+        <p>Everything here was built by someone using it in production. No analyst-firm theory. No certification padding.</p>
+      </div>
+      <div class="manifesto-item">
+        <h3>No beginner ramp.</h3>
+        <p>We meet you where you are. If you need to know what a microservice is, this isn&rsquo;t for you.</p>
+      </div>
+      <div class="manifesto-item">
+        <h3>The hard answer, not the safe one.</h3>
+        <p>Senior professionals need the truth about tradeoffs, not hedged advice that covers every scenario and commits to none.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── COMPARISON ── -->
+<div class="comparison-section">
+  <div class="comparison-inner">
+    <div class="comp-label">Why TechTradeoff</div>
+    <h2 class="comp-title">The tools senior professionals deserve didn&rsquo;t exist</h2>
+    <p class="comp-sub">The market had analyst firms, communities, and blogs. None of them have CLI tools, automation, or practitioner-built frameworks. We built the gap.</p>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th style="text-align:left; width:36%;">Capability</th>
+          <th class="col-us">TechTradeoff</th>
+          <th>Analyst Firms<br/><span style="font-weight:400; font-size:0.7rem;">(Gartner, Info-Tech)</span></th>
+          <th>Communities<br/><span style="font-weight:400; font-size:0.7rem;">(StaffEng, PreSales Collective)</span></th>
+          <th>DIY<br/><span style="font-weight:400; font-size:0.7rem;">(Blogs, Papers)</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label">Practitioner-built, not analyst-written</td>
+          <td class="col-us"><span class="check">&#10003;</span></td>
+          <td><span class="cross">&#10005;</span></td>
+          <td><span class="check">&#10003;</span></td>
+          <td><span class="partial">Varies</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">Open source &amp; free to use</td>
+          <td class="col-us"><span class="check">&#10003;</span></td>
+          <td><span class="cross">&#10005;</span></td>
+          <td><span class="check">&#10003;</span></td>
+          <td><span class="check">&#10003;</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">CLI tooling you can run today</td>
+          <td class="col-us"><span class="check">&#10003;</span></td>
+          <td><span class="cross">&#10005;</span></td>
+          <td><span class="cross">&#10005;</span></td>
+          <td><span class="cross">&#10005;</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">Automated architecture governance (PR-level)</td>
+          <td class="col-us"><span class="check">&#10003;</span></td>
+          <td><span class="cross">&#10005;</span></td>
+          <td><span class="cross">&#10005;</span></td>
+          <td><span class="cross">&#10005;</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">Enterprise Architecture standards encoded for LLMs</td>
+          <td class="col-us"><span class="check">&#10003;</span></td>
+          <td><span class="partial">Partial</span></td>
+          <td><span class="cross">&#10005;</span></td>
+          <td><span class="cross">&#10005;</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">Presales qualification framework with scoring</td>
+          <td class="col-us"><span class="check">&#10003;</span></td>
+          <td><span class="cross">&#10005;</span></td>
+          <td><span class="partial">Partial</span></td>
+          <td><span class="cross">&#10005;</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">Spans Architecture + AI/LLM + Platform + Presales</td>
+          <td class="col-us"><span class="check">&#10003;</span></td>
+          <td><span class="partial">Partial</span></td>
+          <td><span class="cross">&#10005;</span></td>
+          <td><span class="cross">&#10005;</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">No subscription or certification required</td>
+          <td class="col-us"><span class="check">&#10003;</span></td>
+          <td><span class="cross">&#10005;</span></td>
+          <td><span class="check">&#10003;</span></td>
+          <td><span class="check">&#10003;</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── PAIN AREAS ── -->
+<div class="pain-section" id="pain">
+  <div class="pain-inner">
+    <div class="pain-label">The Real Problems</div>
+    <h2 class="pain-title">Where senior professionals actually get stuck</h2>
+    <p class="pain-sub">These aren&rsquo;t beginner mistakes. They&rsquo;re structural gaps that slow down experienced engineers and architects &mdash; the problems without a Stack Overflow answer.</p>
+    <div class="pain-grid">
+
+      <div class="pain-card">
+        <div class="pain-card-num">01 &mdash; Architecture Intelligence</div>
+        <h3>You&rsquo;re a Principal Architect. Your AI copilot thinks like a junior.</h3>
+        <div class="pain-scenario">&ldquo;You&rsquo;re designing multi-tenant SaaS on Kubernetes. Namespace-per-tenant or cluster-per-tenant? You ask GPT. It gives you a balanced &lsquo;it depends&rsquo; with no weighting for your constraints: 500 tenants, strict data residency, bursty workloads, 3-person platform team.&rdquo;</div>
+        <p>Generic LLMs have no schema for enterprise tradeoffs. They don&rsquo;t know when NOT to use microservices. They can&rsquo;t reason about regulatory constraints, CAP theorem implications in your specific topology, or the 12 options you&rsquo;ve already ruled out.</p>
+        <div class="pain-need"><strong>What you actually need:</strong> An AI that already has enterprise architecture patterns encoded &mdash; one that surfaces constraint conflicts and reasons about tradeoffs at principal-architect depth, not tutorial depth.</div>
+        <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">archpilot</span></div>
       </div>
 
-      <a href="#services">Services</a>
-      <a href="about.html">About</a>
-      <a href="https://techtradeoff.substack.com" target="_blank">Newsletter</a>
-      <a href="https://www.linkedin.com/in/gauravs19/" target="_blank" class="nav-cta">Get in Touch</a>
-    </div>
-  </nav>
+      <div class="pain-card">
+        <div class="pain-card-num">02 &mdash; Architecture Governance</div>
+        <h3>Decisions made in the boardroom get unmade in the PR queue.</h3>
+        <div class="pain-scenario">&ldquo;Six weeks after your architecture review &mdash; where everyone agreed &lsquo;no synchronous calls across bounded contexts&rsquo; &mdash; a developer opens a PR with a direct HTTP call from Order into Inventory. The reviewer doesn&rsquo;t know the decision. It merges. You now have a distributed monolith.&rdquo;</div>
+        <p>At 10 engineers pushing 20 PRs a week, you have 2&ndash;3 silent violations every week. Each one is invisible technical debt that compounds until it becomes a production incident or a full re-architecture project costing months.</p>
+        <div class="pain-need"><strong>What you actually need:</strong> Governance that lives where code lives &mdash; in the PR. Automated scoring that catches pattern violations before they merge, not six months later in a quarterly review.</div>
+        <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">archpilot-reviewer</span></div>
+      </div>
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-eyebrow">&#9889; The Tech OS for Senior Professionals</div>
-    <h1>Senior problems.<br/>No <em>junior</em> answers.</h1>
-    <p class="hero-sub">
-      Most tools are built for beginners. Most advice is built for teams of 10.
-      TechTradeoff is built for the professionals who've outgrown both &mdash;
-      and still have the hardest decisions to make.
-    </p>
-    <p class="hero-meta">For Staff Engineers &middot; Enterprise Architects &middot; CTOs &middot; Solutions Architects &middot; Senior Consultants</p>
-    <div class="hero-cta">
-      <a href="#pain" class="btn btn-primary">See the Problems We Solve</a>
+      <div class="pain-card">
+        <div class="pain-card-num">03 &mdash; Architecture Documentation</div>
+        <h3>You have an architecture review in 3 days. The blank page isn&rsquo;t moving.</h3>
+        <div class="pain-scenario">&ldquo;You need an ADR for the event streaming decision, a C4 Level 2 narrative, and a cross-cutting concerns document. You know what the right answer is &mdash; you just can&rsquo;t turn it into a structured artifact that survives CTO scrutiny in under two days.&rdquo;</div>
+        <p>A proper Architecture Decision Record requires structured problem statement, 3+ alternatives with pros/cons matrix, constraint mapping, decision rationale tied to business context. What AI produces without guidance is either too generic or requires 4 hours of prompting to correct.</p>
+        <div class="pain-need"><strong>What you actually need:</strong> A CLI that encodes enterprise-grade document structure so the scaffold is already correct. You add the judgment, not the boilerplate. Output that passes a review board, not just a spell-check.</div>
+        <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">archpilot-cli</span></div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-card-num">04 &mdash; Enterprise Presales</div>
+        <h3>You built a $2M solution for a deal that couldn&rsquo;t buy it.</h3>
+        <div class="pain-scenario">&ldquo;Three discovery calls. A detailed reference architecture. A CTO presentation. The deal is now stalled. Why? Nobody qualified the commercial risk. Procurement discovered the licensing model doesn&rsquo;t fit their framework. Weeks of architecture work, dead.&rdquo;</div>
+        <p>Technical presales is tribal knowledge. Senior SAs are great architects but poor deal orchestrators. Discovery goes deep on technical requirements and misses commercial risk, procurement constraints, and stakeholder misalignment. By the time architecture is done, the deal was never real.</p>
+        <div class="pain-need"><strong>What you actually need:</strong> A qualification framework scoring deals across architecture complexity, delivery risk, and commercial dimensions before you invest 40 hours in solutioning. The structured discovery-to-close workflow senior SAs have in their heads but never wrote down.</div>
+        <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">cadex</span> &amp; <span class="pain-tool-badge">presales-playbook</span></div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-card-num">05 &mdash; Agentic AI in Production</div>
+        <h3>Your AI demo worked perfectly. Your production system pages at 2am.</h3>
+        <div class="pain-scenario">&ldquo;Your RAG pipeline worked flawlessly in staging. In production: latency is 12 seconds, retrieval returns wrong documents 20% of the time, and when an agent makes a wrong decision, there&rsquo;s no trace of why. On-call doesn&rsquo;t know what to do when the agent loop gets stuck.&rdquo;</div>
+        <p>80% of AI projects never reach production. Multi-agent orchestration diagrams look elegant; running them at scale is a different problem. You need evaluation pipelines measuring semantic correctness, distributed tracing across agent hops, fallback strategies when models degrade, and governance preventing irreversible actions.</p>
+        <div class="pain-need"><strong>What you actually need:</strong> A production strategy, not another architecture diagram. One that covers observability, evaluation, graceful degradation, and AI governance at the inference layer, not just at design time.</div>
+        <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">AI/LLM Advisory</span></div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-card-num">06 &mdash; Industrial Platform Engineering</div>
+        <h3>Your team is reinventing an architecture that was solved 5 years ago.</h3>
+        <div class="pain-scenario">&ldquo;80,000 sensors publishing at 10Hz. That&rsquo;s 800,000 events/second. Your team is still debating Kafka vs. Kinesis. Nobody has modelled what happens during edge outage: 2 hours of buffered data from 200 sites hitting simultaneously. You need 7 years of retention without a $3M/year storage bill.&rdquo;</div>
+        <p>Industrial IoT at scale is a pattern-complete problem. Telemetry ingestion, edge preprocessing, time-series tiering, distributed coordination &mdash; all solved. Repeatedly, by different teams, with no shared reference. Every IIoT engagement starts from a blank Miro board and rediscovers the same failure modes in production.</p>
+        <div class="pain-need"><strong>What you actually need:</strong> A production-grade reference architecture encoding decisions already made at scale &mdash; so your team debates the constraints specific to your system, not re-derives known patterns.</div>
+        <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">iiot-reference-architecture</span></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── OS LAYERS ── -->
+<section class="os-section" id="os">
+  <div class="section-label">The Operating System</div>
+  <h2 class="section-title">A structured system, not a content dump</h2>
+  <p class="section-sub">TechTradeoff is organized like an OS &mdash; each layer has a purpose, everything connects. Unlike StaffEng (career only) or TOGAF (methodology only), every layer maps to a tool, playbook, or framework you can pull today.</p>
+  <div class="os-grid">
+    <div class="os-card">
+      <div class="os-layer-tag">Layer 1</div>
+      <div class="os-card-icon">&#9881;&#65039;</div>
+      <h3>Kernel</h3>
+      <p>Decision frameworks and first-principles thinking. The mental models behind hard architectural tradeoffs.</p>
+    </div>
+    <div class="os-card">
+      <div class="os-layer-tag">Layer 2</div>
+      <div class="os-card-icon">&#128421;&#65039;</div>
+      <h3>Shell</h3>
+      <p>Leadership at the senior level. Stakeholder navigation, architecture defence, and influence without authority.</p>
+    </div>
+    <div class="os-card">
+      <div class="os-layer-tag">Layer 3</div>
+      <div class="os-card-icon">&#128268;</div>
+      <h3>Drivers</h3>
+      <p>Domain modules: Architecture, AI/LLM, Platform Engineering, Presales &mdash; deep dives per vertical.</p>
+    </div>
+    <div class="os-card">
+      <div class="os-layer-tag">Layer 4</div>
+      <div class="os-card-icon">&#128230;</div>
+      <h3>Apps</h3>
+      <p>Playbooks, templates, checklists, and CLI tools &mdash; pull exactly what you need, when you need it.</p>
+    </div>
+    <div class="os-card">
+      <div class="os-layer-tag">Layer 5</div>
+      <div class="os-card-icon">&#127760;</div>
+      <h3>Network</h3>
+      <p>Peer layer of senior tech professionals. No juniors, no noise &mdash; just people who&rsquo;ve been in the room.</p>
+    </div>
+  </div>
+  <div class="audience-row">
+    <span class="audience-chip">Staff Engineers</span>
+    <span class="audience-chip">Enterprise Architects</span>
+    <span class="audience-chip">Principal Engineers</span>
+    <span class="audience-chip">CTOs &amp; VPs Engineering</span>
+    <span class="audience-chip">Solutions Architects</span>
+    <span class="audience-chip">Senior Consultants</span>
+    <span class="audience-chip">Technical Presales</span>
+  </div>
+</section>
+
+<!-- ── FEATURED THINKING ── -->
+<div class="thinking-section" id="thinking">
+  <div class="thinking-inner">
+    <div class="section-label">From the Newsletter</div>
+    <h2 class="section-title">The tradeoffs nobody else will commit to</h2>
+    <p class="section-sub">Tech Tradeoff on Substack deconstructs the decisions that don&rsquo;t have clean answers &mdash; and doesn&rsquo;t hedge.</p>
+    <div class="thinking-grid">
+      <div class="thinking-card">
+        <div class="thinking-tag">Architecture</div>
+        <h3>The architecture review that didn&rsquo;t survive the sprint</h3>
+        <p>Why architectural governance fails in most organisations: the decision was made in the right room, documented in the wrong place, and checked by nobody. A post-mortem on how good intentions become distributed monoliths.</p>
+        <a href="https://techtradeoff.substack.com" target="_blank" class="thinking-link">Read on Substack &#8594;</a>
+      </div>
+      <div class="thinking-card">
+        <div class="thinking-tag">Agentic AI</div>
+        <h3>Why 80% of AI projects never reach production</h3>
+        <p>The demo worked. The prototype impressed the CTO. Then it hit production and paged at 2am. The gap between a compelling AI demo and a production-grade system is not a technical gap &mdash; it&rsquo;s a strategy gap.</p>
+        <a href="https://techtradeoff.substack.com" target="_blank" class="thinking-link">Read on Substack &#8594;</a>
+      </div>
+      <div class="thinking-card">
+        <div class="thinking-tag">Presales</div>
+        <h3>The $50M deal mistake every Solutions Architect makes</h3>
+        <p>You built the architecture. You won the technical evaluation. The deal is still dead. The mistake wasn&rsquo;t the solution &mdash; it was skipping commercial qualification before you started solutioning. Here&rsquo;s the framework that fixes it.</p>
+        <a href="https://techtradeoff.substack.com" target="_blank" class="thinking-link">Read on Substack &#8594;</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SERVICES ── -->
+<section class="services-section" id="services">
+  <div class="section-label">Services</div>
+  <h2 class="section-title">When you need more than a tool</h2>
+  <p class="section-sub">Hands-on consulting for teams and leaders who&rsquo;ve outgrown generic advice. Engagements are focused, senior, and outcome-driven.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3>Architecture Review &amp; Governance</h3>
+      <p>Deep review of your current architecture against enterprise standards. Establish patterns, guardrails, and automated governance that scale with your team.</p>
+      <ul class="service-bullets">
+        <li>Architecture standards definition</li>
+        <li>ADR process &amp; tooling setup</li>
+        <li>Automated PR-level governance</li>
+        <li>Greenfield design &amp; legacy modernisation</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3>Platform Engineering Advisory</h3>
+      <p>For teams building or scaling distributed systems, cloud-native platforms, or Kubernetes-based infrastructure at enterprise load.</p>
+      <ul class="service-bullets">
+        <li>Distributed systems design</li>
+        <li>Kubernetes at 100K+ workloads</li>
+        <li>Platform reliability &amp; observability</li>
+        <li>IIoT &amp; edge architecture</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3>Agentic AI / LLM Production Strategy</h3>
+      <p>Moving GenAI from prototype to production. Strategy, architecture, and governance for teams running real AI workloads at scale.</p>
+      <ul class="service-bullets">
+        <li>Multi-agent orchestration design</li>
+        <li>LLM observability &amp; evaluation</li>
+        <li>RAG architecture at enterprise scale</li>
+        <li>AI governance &amp; risk frameworks</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <h3>Presales &amp; Technical Sales Enablement</h3>
+      <p>For solutions architects and technical leaders who need to win complex enterprise deals with rigour, not just demos.</p>
+      <ul class="service-bullets">
+        <li>Discovery &amp; qualification frameworks</li>
+        <li>Architecture defense coaching</li>
+        <li>Deal orchestration playbooks</li>
+        <li>Technical win strategy</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOR / NOT FOR ── -->
+<div class="for-section">
+  <div class="for-inner" style="grid-template-columns: 1fr; max-width:1000px; margin: 0 auto;">
+    <div class="for-headline">
+      <div class="section-label">Fit check</div>
+      <h2 class="section-title">Who this is built for</h2>
+    </div>
+  </div>
+  <div class="for-inner">
+    <div class="for-col yes">
+      <h3>&#10003; &nbsp;This is for you if&hellip;</h3>
+      <ul class="for-list">
+        <li><span class="ico">&#10003;</span>You&rsquo;ve been in senior IC or leadership roles for 8+ years and the standard playbooks no longer apply</li>
+        <li><span class="ico">&#10003;</span>You make or influence decisions with $1M+ consequences &mdash; architecture, platform, deals, or AI strategy</li>
+        <li><span class="ico">&#10003;</span>You&rsquo;ve tried asking an LLM for senior architecture advice and gotten tutorial-level answers</li>
+        <li><span class="ico">&#10003;</span>Your architecture decisions are getting reversed in PRs and you want automated governance</li>
+        <li><span class="ico">&#10003;</span>You&rsquo;re a Solutions Architect who&rsquo;s lost deals in the solutioning phase and wants a structured framework</li>
+        <li><span class="ico">&#10003;</span>Your AI prototype works in staging and fails in production and you need a production strategy</li>
+        <li><span class="ico">&#10003;</span>You&rsquo;re building at scale (50+ engineers, $10M+ platform, enterprise clients) and need senior-level patterns</li>
+      </ul>
+    </div>
+    <div class="for-col no">
+      <h3>&#10005; &nbsp;This is NOT for you if&hellip;</h3>
+      <ul class="for-list">
+        <li><span class="ico">&#10005;</span>You&rsquo;re looking for tutorials, beginner guides, or &ldquo;what is a microservice&rdquo; explainers</li>
+        <li><span class="ico">&#10005;</span>Your team is under 10 engineers and the main challenge is shipping features, not architecture governance</li>
+        <li><span class="ico">&#10005;</span>You want a certification that signals seniority rather than tools that create it</li>
+        <li><span class="ico">&#10005;</span>You need someone to tell you what to do rather than a framework to make better decisions yourself</li>
+        <li><span class="ico">&#10005;</span>You&rsquo;re in the early stages of learning distributed systems and want foundational content</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ── CTA ── -->
+<div class="cta-wrap" style="padding-top: 5rem;">
+  <div class="cta-section">
+    <h2>Bring a hard problem.<br/>Leave with a plan.</h2>
+    <p>Architecture decisions, platform strategy, AI production rollouts, or presales deals &mdash; if it&rsquo;s complex and senior, it belongs here.</p>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <a href="https://www.linkedin.com/in/gauravs19/" target="_blank" class="btn btn-primary">Connect on LinkedIn</a>
       <a href="https://techtradeoff.substack.com" target="_blank" class="btn btn-outline">Read the Newsletter</a>
     </div>
-    <div class="hero-trust">
-      <span class="trust-item"><span class="trust-dot"></span>Open source &amp; free</span>
-      <span class="trust-item"><span class="trust-dot"></span>6 production tools</span>
-      <span class="trust-item"><span class="trust-dot"></span>100K+ asset scale</span>
-      <span class="trust-item"><span class="trust-dot"></span>4 service domains</span>
-    </div>
   </div>
+</div>
 
-  <!-- PAIN AREAS -->
-  <div class="pain-section" id="pain">
-    <div class="pain-inner">
-      <div class="pain-label">The Real Problems</div>
-      <h2 class="pain-title">Where senior professionals actually get stuck</h2>
-      <p class="pain-sub">These aren't beginner mistakes. They're the structural gaps that slow down experienced engineers and architects &mdash; the problems that don't have a Stack Overflow answer.</p>
-      <div class="pain-grid">
-
-        <div class="pain-card">
-          <div class="pain-card-num">01 &mdash; Architecture Intelligence</div>
-          <h3>You're a Principal Architect. Your AI copilot thinks like a junior.</h3>
-          <div class="pain-scenario">"You're designing multi-tenant SaaS on Kubernetes. Namespace-per-tenant or cluster-per-tenant? You ask GPT. It gives you a balanced 'it depends' with no weighting for your actual constraints: 500 tenants, strict data residency, bursty burst workloads, and a 3-person platform team."</div>
-          <p>Generic LLMs have no schema for enterprise tradeoffs. They don't know when NOT to use microservices. They can't reason about regulatory constraints, CAP theorem implications in your specific topology, or the 12 options you've already ruled out. You end up prompting for 45 minutes to get an answer a senior architect would give in 10.</p>
-          <div class="pain-need"><strong>What you actually need:</strong> An AI that already has enterprise architecture patterns encoded &mdash; one that asks the right clarifying questions, surfaces constraint conflicts, and reasons about tradeoffs at principal-architect depth, not tutorial depth.</div>
-          <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">archpilot</span></div>
-        </div>
-
-        <div class="pain-card">
-          <div class="pain-card-num">02 &mdash; Architecture Governance</div>
-          <h3>Decisions made in the boardroom get unmade in the PR queue.</h3>
-          <div class="pain-scenario">"Six weeks after your architecture review &mdash; where everyone agreed 'no synchronous calls across bounded contexts' &mdash; a developer opens a PR with a direct HTTP call from the Order service into the Inventory service. The reviewer doesn't know the decision. It merges. You now have a distributed monolith."</div>
-          <p>Architecture governance lives in Confluence. Developers don't read Confluence before writing code. At 10 engineers pushing 20 PRs a week, you have 2&ndash;3 silent violations every week. Each one is invisible technical debt that compounds until it becomes a production incident or a re-architecture project.</p>
-          <div class="pain-need"><strong>What you actually need:</strong> Governance that lives where code lives &mdash; in the PR. Automated scoring that catches pattern violations, missing ADRs, and architectural drift before they merge, not six months later in a review.</div>
-          <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">archpilot-reviewer</span></div>
-        </div>
-
-        <div class="pain-card">
-          <div class="pain-card-num">03 &mdash; Architecture Documentation</div>
-          <h3>You have an architecture review in 3 days. The blank page isn't moving.</h3>
-          <div class="pain-scenario">"You need an ADR for the event streaming decision, a C4 Level 2 narrative, and a cross-cutting concerns document. You open a blank page. You know what the right answer is &mdash; you just can't turn it into a structured artifact that survives CTO scrutiny in less than two days."</div>
-          <p>A proper Architecture Decision Record requires: structured problem statement, 3+ alternatives with pros/cons matrix, constraint mapping, decision rationale tied to business context. What AI produces without guidance is either too generic (missing your constraints) or requires so much scaffolding to correct that you've spent four hours prompting instead of two hours writing.</p>
-          <div class="pain-need"><strong>What you actually need:</strong> A CLI that encodes enterprise-grade document structure so the scaffold is already correct &mdash; you add the judgment, not the boilerplate. Output that passes a review board, not just a spell-check.</div>
-          <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">archpilot-cli</span></div>
-        </div>
-
-        <div class="pain-card">
-          <div class="pain-card-num">04 &mdash; Enterprise Presales</div>
-          <h3>You built a $2M solution for a deal that couldn't buy it.</h3>
-          <div class="pain-scenario">"You're a Solutions Architect on a $50M deal. Three discovery calls. A detailed reference architecture. A CTO presentation. The deal is now stalled. Why? Nobody qualified the commercial risk. Procurement discovered the licensing model doesn't fit their framework. The deal dies not in the architecture room but in a spreadsheet."</div>
-          <p>Technical presales is tribal knowledge. Senior SAs are great architects but poor deal orchestrators. Discovery goes deep on technical requirements and misses commercial risk, procurement constraints, and stakeholder misalignment. Solutioning happens before the deal is qualified. By the time the architecture is done, weeks of effort have been spent on a deal that was never real.</p>
-          <div class="pain-need"><strong>What you actually need:</strong> A qualification framework that scores deals across architecture complexity, delivery risk, and commercial dimensions before you invest 40 hours in solutioning. A structured playbook for the discovery-to-close workflow that senior SAs have in their heads but never wrote down.</div>
-          <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">cadex</span> &amp; <span class="pain-tool-badge">presales-playbook</span></div>
-        </div>
-
-        <div class="pain-card">
-          <div class="pain-card-num">05 &mdash; Agentic AI in Production</div>
-          <h3>Your AI demo worked perfectly. Your production system pages at 2am.</h3>
-          <div class="pain-scenario">"Your RAG pipeline worked flawlessly in staging. In production: latency is 12 seconds. The retrieval returns chunks from the wrong documents 20% of the time. When an agent makes a wrong decision, there's no trace of why. Your on-call rotation doesn't know what to do when an agent loop gets stuck."</div>
-          <p>80% of AI projects never reach production. The prototype worked because the test data was clean, the load was low, and nobody was watching. Production exposes: non-deterministic agent loops with no observability, evaluation pipelines measuring syntax not semantic correctness, missing fallback strategies when models degrade, and no governance layer preventing agents from taking irreversible actions. Multi-agent orchestration diagrams look elegant; running them at scale is a different problem entirely.</p>
-          <div class="pain-need"><strong>What you actually need:</strong> A production strategy &mdash; not another architecture diagram. Distributed tracing across agent hops, semantic evaluation pipelines, graceful degradation patterns, and governance that works at the inference layer, not just at design time.</div>
-          <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">AI/LLM Services</span></div>
-        </div>
-
-        <div class="pain-card">
-          <div class="pain-card-num">06 &mdash; Industrial Platform Engineering</div>
-          <h3>Your team is reinventing an architecture that was solved 5 years ago.</h3>
-          <div class="pain-scenario">"80,000 sensors publishing telemetry at 10Hz. That's 800,000 events per second. Your team is still debating Kafka vs. Kinesis. Nobody has modelled what happens during an edge outage: 2 hours of buffered data from 200 sites arriving simultaneously. Your hot/warm/cold storage tier needs 7 years of retention without a $3M/year storage bill."</div>
-          <p>Industrial IoT at scale is a pattern-complete problem. The telemetry ingestion architecture, edge preprocessing topology, time-series storage tiering, and distributed coordination patterns have been solved &mdash; repeatedly, by different teams, with no shared reference. Every IIoT engagement starts from a blank Miro board. The same architectural mistakes get made. The same capacity planning gets skipped. The same edge failure modes get discovered in production.</p>
-          <div class="pain-need"><strong>What you actually need:</strong> A production-grade reference architecture that encodes the decisions that have already been made at scale &mdash; so your team is arguing about the interesting constraints specific to your system, not re-deriving known patterns.</div>
-          <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">iiot-reference-architecture</span></div>
-        </div>
-
-      </div>
-    </div>
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-brand">Tech<span>Tradeoff</span></div>
+  <div class="footer-links">
+    <a href="about.html">About</a>
+    <a href="https://techtradeoff.substack.com" target="_blank">Newsletter</a>
+    <a href="https://github.com/techtradeoff" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/gauravs19/" target="_blank">LinkedIn</a>
   </div>
-
-  <!-- OS LAYERS -->
-  <section id="os">
-    <div class="section-label">The Operating System</div>
-    <h2 class="section-title">A structured system, not a content dump</h2>
-    <p class="section-sub">TechTradeoff is organized like an OS &mdash; each layer serves a purpose, everything connects. Pull what you need from the layer that matches the problem.</p>
-    <div class="os-grid">
-      <div class="os-card">
-        <div class="os-card-icon">&#9881;&#65039;</div>
-        <h3>Kernel</h3>
-        <p>Decision frameworks and first-principles thinking. The mental models behind every hard architectural tradeoff.</p>
-      </div>
-      <div class="os-card">
-        <div class="os-card-icon">&#128421;&#65039;</div>
-        <h3>Shell</h3>
-        <p>Leadership and communication at the senior level. Stakeholder navigation, architecture defense, and influence without authority.</p>
-      </div>
-      <div class="os-card">
-        <div class="os-card-icon">&#128268;</div>
-        <h3>Drivers</h3>
-        <p>Domain modules across Architecture, AI/LLM, Platform Engineering, and Presales &mdash; deep dives per vertical.</p>
-      </div>
-      <div class="os-card">
-        <div class="os-card-icon">&#128230;</div>
-        <h3>Apps</h3>
-        <p>Playbooks, templates, checklists, and CLI tools &mdash; pull exactly what you need, when you need it.</p>
-      </div>
-      <div class="os-card">
-        <div class="os-card-icon">&#127760;</div>
-        <h3>Network</h3>
-        <p>Peer layer of senior tech professionals. No juniors, no noise &mdash; just people who've been in the room.</p>
-      </div>
-    </div>
-    <div class="audience-row">
-      <span class="audience-chip">Staff Engineers</span>
-      <span class="audience-chip">Enterprise Architects</span>
-      <span class="audience-chip">Principal Engineers</span>
-      <span class="audience-chip">CTOs &amp; VPs Engineering</span>
-      <span class="audience-chip">Solutions Architects</span>
-      <span class="audience-chip">Senior Consultants</span>
-      <span class="audience-chip">Technical Presales</span>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <div class="services-bg" id="services">
-    <div class="services-inner">
-      <div class="section-label">Services</div>
-      <h2 class="section-title">When you need more than a tool</h2>
-      <p class="section-sub">Hands-on consulting for teams and leaders who've outgrown generic advice. Engagements are focused, senior, and outcome-driven.</p>
-      <div class="services-grid">
-
-        <div class="service-card">
-          <div class="service-num">01</div>
-          <h3>Architecture Review &amp; Governance</h3>
-          <p>Deep review of your current architecture against enterprise standards. Establish patterns, guardrails, and automated governance that scales with your team.</p>
-          <ul class="service-bullets">
-            <li>Architecture standards definition</li>
-            <li>ADR process &amp; tooling setup</li>
-            <li>Automated PR-level governance</li>
-            <li>Greenfield design &amp; legacy modernisation</li>
-          </ul>
-        </div>
-
-        <div class="service-card">
-          <div class="service-num">02</div>
-          <h3>Platform Engineering Advisory</h3>
-          <p>For teams building or scaling distributed systems, cloud-native platforms, or Kubernetes-based infrastructure at enterprise load.</p>
-          <ul class="service-bullets">
-            <li>Distributed systems design</li>
-            <li>Kubernetes at 100K+ workloads</li>
-            <li>Platform reliability &amp; observability</li>
-            <li>IIoT &amp; edge architecture</li>
-          </ul>
-        </div>
-
-        <div class="service-card">
-          <div class="service-num">03</div>
-          <h3>Agentic AI / LLM Production Strategy</h3>
-          <p>Moving GenAI from prototype to production. Strategy, architecture, and governance for teams running real AI workloads at scale.</p>
-          <ul class="service-bullets">
-            <li>Multi-agent orchestration design</li>
-            <li>LLM observability &amp; evaluation</li>
-            <li>RAG architecture at enterprise scale</li>
-            <li>AI governance &amp; risk frameworks</li>
-          </ul>
-        </div>
-
-        <div class="service-card">
-          <div class="service-num">04</div>
-          <h3>Presales &amp; Technical Sales Enablement</h3>
-          <p>For sales engineers, solutions architects, and technical leaders who need to win complex enterprise deals with rigour, not just demos.</p>
-          <ul class="service-bullets">
-            <li>Discovery &amp; qualification frameworks</li>
-            <li>Architecture defense coaching</li>
-            <li>Deal orchestration playbooks</li>
-            <li>Technical win strategy</li>
-          </ul>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- CTA -->
-  <div class="cta-wrap">
-    <div class="cta-section">
-      <h2>Bring a hard problem. Leave with a plan.</h2>
-      <p>Architecture decisions, platform strategy, AI production rollouts, or presales deals &mdash; if it's complex and senior, it belongs here.</p>
-      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-        <a href="https://www.linkedin.com/in/gauravs19/" target="_blank" class="btn btn-primary">Connect on LinkedIn</a>
-        <a href="https://techtradeoff.substack.com" target="_blank" class="btn btn-outline">Read the Newsletter</a>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    <p>&copy; 2026 <span>TechTradeoff</span> &middot; <a href="about.html">About</a> &middot; <a href="https://github.com/techtradeoff" target="_blank">GitHub</a> &middot; <a href="https://techtradeoff.substack.com" target="_blank">Newsletter</a></p>
-  </footer>
+  <div class="footer-copy">&copy; 2026 TechTradeoff &middot; Built by Gaurav Sharma</div>
+</footer>
 
 </body>
 </html>
