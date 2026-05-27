@@ -154,28 +154,41 @@
     .pain-sub { color: #94a3b8; max-width: 560px; margin-bottom: 3rem; font-size: 1rem; }
 
     .pain-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.25rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
     }
     .pain-card {
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 14px; padding: 1.75rem;
-      transition: border-color 0.2s;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px; padding: 2rem;
+      transition: border-color 0.2s, background 0.2s;
+      display: flex; flex-direction: column;
     }
-    .pain-card:hover { border-color: rgba(129,140,248,0.35); }
+    .pain-card:hover { border-color: rgba(129,140,248,0.4); background: rgba(255,255,255,0.05); }
     .pain-card-num {
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
-      color: #818cf8; margin-bottom: 1rem; text-transform: uppercase;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+      color: #818cf8; margin-bottom: 1.1rem; text-transform: uppercase;
     }
-    .pain-card h3 { font-size: 1rem; font-weight: 700; color: #f1f5f9; margin-bottom: 0.6rem; }
-    .pain-card p { font-size: 0.85rem; color: #94a3b8; line-height: 1.65; }
+    .pain-card h3 { font-size: 1.05rem; font-weight: 700; color: #f1f5f9; margin-bottom: 1rem; line-height: 1.4; }
+    .pain-scenario {
+      font-size: 0.85rem; color: #94a3b8; line-height: 1.7; margin-bottom: 0.85rem;
+      padding: 0.85rem 1rem;
+      background: rgba(255,255,255,0.04); border-left: 2px solid rgba(129,140,248,0.35);
+      border-radius: 0 8px 8px 0; font-style: italic;
+    }
+    .pain-card p { font-size: 0.85rem; color: #94a3b8; line-height: 1.7; margin-bottom: 0.6rem; }
+    .pain-need {
+      font-size: 0.82rem; color: #c7d2fe; line-height: 1.65; margin-top: 0.5rem;
+      padding-top: 0.85rem; border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .pain-need strong { color: #e0e7ff; }
     .pain-card .pain-tool {
-      margin-top: 1.25rem; font-size: 0.75rem; font-weight: 600;
-      color: #818cf8; display: flex; align-items: center; gap: 0.4rem;
+      margin-top: auto; padding-top: 1.25rem; font-size: 0.75rem; font-weight: 600;
+      color: #818cf8; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
     }
     .pain-tool-badge {
-      background: rgba(129,140,248,0.12); border: 1px solid rgba(129,140,248,0.2);
-      padding: 0.2rem 0.55rem; border-radius: 4px; font-family: monospace; font-size: 0.72rem;
+      background: rgba(129,140,248,0.12); border: 1px solid rgba(129,140,248,0.25);
+      padding: 0.2rem 0.6rem; border-radius: 4px; font-family: monospace; font-size: 0.72rem;
+      color: #a5b4fc;
     }
 
     /* ── SECTIONS ── */
@@ -341,50 +354,62 @@
   <div class="pain-section" id="pain">
     <div class="pain-inner">
       <div class="pain-label">The Real Problems</div>
-      <h2 class="pain-title">Where senior professionals get stuck</h2>
-      <p class="pain-sub">These aren't beginner mistakes. They're the invisible friction points that slow down experienced engineers and architects every day.</p>
+      <h2 class="pain-title">Where senior professionals actually get stuck</h2>
+      <p class="pain-sub">These aren't beginner mistakes. They're the structural gaps that slow down experienced engineers and architects &mdash; the problems that don't have a Stack Overflow answer.</p>
       <div class="pain-grid">
 
         <div class="pain-card">
-          <div class="pain-card-num">01 &mdash; Architecture</div>
-          <h3>LLMs give junior answers to senior questions</h3>
-          <p>You ask an AI to review your architecture and it tells you to "add caching" or "consider microservices." It has no context of enterprise constraints, regulatory requirements, or the tradeoffs you already ruled out.</p>
-          <div class="pain-tool">&#8594; Solved by <span class="pain-tool-badge">archpilot</span></div>
+          <div class="pain-card-num">01 &mdash; Architecture Intelligence</div>
+          <h3>You're a Principal Architect. Your AI copilot thinks like a junior.</h3>
+          <div class="pain-scenario">"You're designing multi-tenant SaaS on Kubernetes. Namespace-per-tenant or cluster-per-tenant? You ask GPT. It gives you a balanced 'it depends' with no weighting for your actual constraints: 500 tenants, strict data residency, bursty burst workloads, and a 3-person platform team."</div>
+          <p>Generic LLMs have no schema for enterprise tradeoffs. They don't know when NOT to use microservices. They can't reason about regulatory constraints, CAP theorem implications in your specific topology, or the 12 options you've already ruled out. You end up prompting for 45 minutes to get an answer a senior architect would give in 10.</p>
+          <div class="pain-need"><strong>What you actually need:</strong> An AI that already has enterprise architecture patterns encoded &mdash; one that asks the right clarifying questions, surfaces constraint conflicts, and reasons about tradeoffs at principal-architect depth, not tutorial depth.</div>
+          <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">archpilot</span></div>
         </div>
 
         <div class="pain-card">
-          <div class="pain-card-num">02 &mdash; Governance</div>
-          <h3>Architecture decisions don't survive the PR</h3>
-          <p>Your standards exist in a wiki nobody reads. Developers merge code that violates architectural constraints because there's no automated check between intent and implementation. Drift is invisible until it's a crisis.</p>
-          <div class="pain-tool">&#8594; Solved by <span class="pain-tool-badge">archpilot-reviewer</span></div>
+          <div class="pain-card-num">02 &mdash; Architecture Governance</div>
+          <h3>Decisions made in the boardroom get unmade in the PR queue.</h3>
+          <div class="pain-scenario">"Six weeks after your architecture review &mdash; where everyone agreed 'no synchronous calls across bounded contexts' &mdash; a developer opens a PR with a direct HTTP call from the Order service into the Inventory service. The reviewer doesn't know the decision. It merges. You now have a distributed monolith."</div>
+          <p>Architecture governance lives in Confluence. Developers don't read Confluence before writing code. At 10 engineers pushing 20 PRs a week, you have 2&ndash;3 silent violations every week. Each one is invisible technical debt that compounds until it becomes a production incident or a re-architecture project.</p>
+          <div class="pain-need"><strong>What you actually need:</strong> Governance that lives where code lives &mdash; in the PR. Automated scoring that catches pattern violations, missing ADRs, and architectural drift before they merge, not six months later in a review.</div>
+          <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">archpilot-reviewer</span></div>
         </div>
 
         <div class="pain-card">
-          <div class="pain-card-num">03 &mdash; Documentation</div>
-          <h3>Architecture docs take days to produce correctly</h3>
-          <p>Writing a proper Architecture Decision Record, a C4 diagram narrative, or a system design document for a review takes days of structured effort. Vibe-written docs fail under scrutiny. There's no fast path to verifiable output.</p>
-          <div class="pain-tool">&#8594; Solved by <span class="pain-tool-badge">archpilot-cli</span></div>
+          <div class="pain-card-num">03 &mdash; Architecture Documentation</div>
+          <h3>You have an architecture review in 3 days. The blank page isn't moving.</h3>
+          <div class="pain-scenario">"You need an ADR for the event streaming decision, a C4 Level 2 narrative, and a cross-cutting concerns document. You open a blank page. You know what the right answer is &mdash; you just can't turn it into a structured artifact that survives CTO scrutiny in less than two days."</div>
+          <p>A proper Architecture Decision Record requires: structured problem statement, 3+ alternatives with pros/cons matrix, constraint mapping, decision rationale tied to business context. What AI produces without guidance is either too generic (missing your constraints) or requires so much scaffolding to correct that you've spent four hours prompting instead of two hours writing.</p>
+          <div class="pain-need"><strong>What you actually need:</strong> A CLI that encodes enterprise-grade document structure so the scaffold is already correct &mdash; you add the judgment, not the boilerplate. Output that passes a review board, not just a spell-check.</div>
+          <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">archpilot-cli</span></div>
         </div>
 
         <div class="pain-card">
-          <div class="pain-card-num">04 &mdash; Presales</div>
-          <h3>Enterprise deals die in the solutioning phase</h3>
-          <p>Technical presales is tribal knowledge. Discovery goes deep in some areas and misses commercial risk entirely. Solutions are built before the deal is properly qualified. Deals stall because architects can't navigate the commercial layer.</p>
-          <div class="pain-tool">&#8594; Solved by <span class="pain-tool-badge">cadex</span> &amp; <span class="pain-tool-badge">presales-playbook</span></div>
+          <div class="pain-card-num">04 &mdash; Enterprise Presales</div>
+          <h3>You built a $2M solution for a deal that couldn't buy it.</h3>
+          <div class="pain-scenario">"You're a Solutions Architect on a $50M deal. Three discovery calls. A detailed reference architecture. A CTO presentation. The deal is now stalled. Why? Nobody qualified the commercial risk. Procurement discovered the licensing model doesn't fit their framework. The deal dies not in the architecture room but in a spreadsheet."</div>
+          <p>Technical presales is tribal knowledge. Senior SAs are great architects but poor deal orchestrators. Discovery goes deep on technical requirements and misses commercial risk, procurement constraints, and stakeholder misalignment. Solutioning happens before the deal is qualified. By the time the architecture is done, weeks of effort have been spent on a deal that was never real.</p>
+          <div class="pain-need"><strong>What you actually need:</strong> A qualification framework that scores deals across architecture complexity, delivery risk, and commercial dimensions before you invest 40 hours in solutioning. A structured playbook for the discovery-to-close workflow that senior SAs have in their heads but never wrote down.</div>
+          <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">cadex</span> &amp; <span class="pain-tool-badge">presales-playbook</span></div>
         </div>
 
         <div class="pain-card">
-          <div class="pain-card-num">05 &mdash; GenAI Production</div>
-          <h3>Prototypes don't survive contact with production</h3>
-          <p>Every team can build an LLM demo. Almost none can answer: how do you run 50 concurrent agents reliably? How do you observe what's happening inside a RAG pipeline? How do you govern model outputs at scale? Strategy is missing.</p>
-          <div class="pain-tool">&#8594; Advisory &rarr; <span class="pain-tool-badge">AI/LLM Services</span></div>
+          <div class="pain-card-num">05 &mdash; Agentic AI in Production</div>
+          <h3>Your AI demo worked perfectly. Your production system pages at 2am.</h3>
+          <div class="pain-scenario">"Your RAG pipeline worked flawlessly in staging. In production: latency is 12 seconds. The retrieval returns chunks from the wrong documents 20% of the time. When an agent makes a wrong decision, there's no trace of why. Your on-call rotation doesn't know what to do when an agent loop gets stuck."</div>
+          <p>80% of AI projects never reach production. The prototype worked because the test data was clean, the load was low, and nobody was watching. Production exposes: non-deterministic agent loops with no observability, evaluation pipelines measuring syntax not semantic correctness, missing fallback strategies when models degrade, and no governance layer preventing agents from taking irreversible actions. Multi-agent orchestration diagrams look elegant; running them at scale is a different problem entirely.</p>
+          <div class="pain-need"><strong>What you actually need:</strong> A production strategy &mdash; not another architecture diagram. Distributed tracing across agent hops, semantic evaluation pipelines, graceful degradation patterns, and governance that works at the inference layer, not just at design time.</div>
+          <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">AI/LLM Services</span></div>
         </div>
 
         <div class="pain-card">
-          <div class="pain-card-num">06 &mdash; Platform</div>
-          <h3>Every IIoT platform gets reinvented from scratch</h3>
-          <p>Industrial IoT at 100K+ concurrent assets is a solved problem &mdash; but the patterns aren't written down. Teams rebuild the same telemetry pipelines, edge coordination layers, and distributed storage decisions with no reference point.</p>
-          <div class="pain-tool">&#8594; Solved by <span class="pain-tool-badge">iiot-reference-architecture</span></div>
+          <div class="pain-card-num">06 &mdash; Industrial Platform Engineering</div>
+          <h3>Your team is reinventing an architecture that was solved 5 years ago.</h3>
+          <div class="pain-scenario">"80,000 sensors publishing telemetry at 10Hz. That's 800,000 events per second. Your team is still debating Kafka vs. Kinesis. Nobody has modelled what happens during an edge outage: 2 hours of buffered data from 200 sites arriving simultaneously. Your hot/warm/cold storage tier needs 7 years of retention without a $3M/year storage bill."</div>
+          <p>Industrial IoT at scale is a pattern-complete problem. The telemetry ingestion architecture, edge preprocessing topology, time-series storage tiering, and distributed coordination patterns have been solved &mdash; repeatedly, by different teams, with no shared reference. Every IIoT engagement starts from a blank Miro board. The same architectural mistakes get made. The same capacity planning gets skipped. The same edge failure modes get discovered in production.</p>
+          <div class="pain-need"><strong>What you actually need:</strong> A production-grade reference architecture that encodes the decisions that have already been made at scale &mdash; so your team is arguing about the interesting constraints specific to your system, not re-deriving known patterns.</div>
+          <div class="pain-tool">&#8594; Addressed by <span class="pain-tool-badge">iiot-reference-architecture</span></div>
         </div>
 
       </div>
