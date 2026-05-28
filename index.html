@@ -152,10 +152,10 @@
   </p>
   <p class="tagline">Architecture &middot; Presales &middot; Platform Engineering &middot; Agentic AI</p>
 
-  <form class="notify-form" onsubmit="handleNotify(event)">
-    <input type="email" id="email-input" placeholder="Enter your email to get early access" autocomplete="email" />
-    <button type="submit" class="notify-btn">Notify Me &#8594;</button>
-  </form>
+  <a href="https://techtradeoff.substack.com" target="_blank" class="notify-btn" style="display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;">
+    Subscribe on Substack &#8594;
+  </a>
+  <p style="font-size:0.78rem;color:var(--muted2);margin-top:0.75rem;margin-bottom:0;">Get notified when we launch &middot; No spam</p>
 
   <div class="domains">
     <div class="domain-chip">
@@ -214,17 +214,5 @@
   <div class="footer-copy">&copy; 2026 TechTradeoff</div>
 </footer>
 
-<script>
-function handleNotify(e) {
-  e.preventDefault();
-  const input = document.getElementById('email-input');
-  const btn = e.target.querySelector('button');
-  if (!input.value) return;
-  btn.textContent = "You're on the list ✓";
-  btn.style.background = '#059669';
-  btn.disabled = true;
-  input.disabled = true;
-}
-</script>
 </body>
 </html>
